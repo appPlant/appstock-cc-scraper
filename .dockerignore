@@ -1,0 +1,12 @@
+.git
+.bundle
+.rspec
+.gitignore
+.travis.yml
+.rubocop.yml
+bin
+coverage
+*.md
+!LICENSE.md
+vendor
+spec
