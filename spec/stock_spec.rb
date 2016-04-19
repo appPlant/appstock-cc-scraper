@@ -27,4 +27,8 @@ RSpec.describe Stock do
   describe '#intraday' do
     it { expect(stock.intraday).to be_a(IntraDay) }
   end
+
+  describe '#inspect' do
+    it { expect(stock.inspect).to match(stock.name) }
+  end
 end

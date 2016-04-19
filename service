@@ -5,3 +5,11 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'rubygems'
 require 'bundler/setup'
+
+require 'securerandom'
+require 'scraper'
+
+drop_box = ENV['DROP_BOX'] || File.join(__dir__, "vendor/mount/#{SecureRandom.uuid}")
+stocks   = %w(US30303M1027 US0231351067)
+
+Scraper.new(drop_box: drop_box).run(*stocks)

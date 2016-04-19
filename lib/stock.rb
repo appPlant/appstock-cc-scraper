@@ -46,4 +46,11 @@ class Stock
   end
 
   alias intraday intra_day
+
+  # Descriptive presentation of the stock instance.
+  #
+  # @return [ String ]
+  def inspect
+    "#{name} #{intraday.price} #{intraday.currency} #{intraday.performance}%"
+  end
 end
