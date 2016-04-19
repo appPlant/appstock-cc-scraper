@@ -17,15 +17,22 @@ class Stock
 
   # Informations from thescreener about the stock.
   #
-  # @return [ Screener ] An instance of class Screener.
+  # @return [ Screener ] Information from thescreener.
   def screener
     @screener ||= Screener.new(@data)
   end
 
   # Recommendations about the stock.
   #
-  # @return [ Screener ] An instance of class Recommendations.
+  # @return [ Screener ] Information about analyst recommendartions.
   def recommendations
     @recommendations ||= Recommendations.new(@data)
+  end
+
+  # Performance of the stock.
+  #
+  # @return [ Performance ] Informations about the performance.
+  def performance
+    @performance ||= Performance.new(@data)
   end
 end
