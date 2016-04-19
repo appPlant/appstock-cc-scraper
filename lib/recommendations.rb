@@ -105,6 +105,13 @@ class Recommendations
 
   private
 
+  # The rating figues for the given rating types.
+  # Only ratings for types included in RATING_TYPES will be returned.
+  #
+  # @param [ *SYMBOL ] List of keys of the interested ratings.
+  #
+  # @return [ Hash ] A hash like
+  #                  { buy:A, overweight:B, hold:C, underweight:D, sell:C }
   def ratings_for(*keys)
     Hash[RATING_TYPES.zip(@data.values_at(*keys))]
   end
