@@ -1,6 +1,8 @@
 require 'basic'
 require 'screener'
 require 'recommendations'
+require 'performance'
+require 'intra_day'
 
 # An instance indicates one finance security.
 class Stock
@@ -35,4 +37,13 @@ class Stock
   def performance
     @performance ||= Performance.new(@data)
   end
+
+  # Price of the stock.
+  #
+  # @return [ IntraDay ] Informations about the price.
+  def intra_day
+    @price ||= IntraDay.new(@data)
+  end
+
+  alias intraday intra_day
 end

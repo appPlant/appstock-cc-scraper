@@ -23,4 +23,8 @@ RSpec.describe Stock do
   describe '#performance' do
     it { expect(stock.performance).to be_a(Performance) }
   end
+
+  describe '#intraday' do
+    it { expect(stock.intraday).to be_a(IntraDay) }
+  end
 end
