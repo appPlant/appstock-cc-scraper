@@ -2,6 +2,11 @@
 # Such informations include the target price, the upside potential or the
 # recent disposition.
 class Recommendations
+  # List of rating types
+  RATING_TYPES = [:buy, :overweight, :hold, :underweight, :sell].freeze
+
+  private_constant :RATING_TYPES
+
   # Initializer of the class.
   #
   # @param [ Hash ] raw The serialized raw data from BNP Paribas.
@@ -72,13 +77,11 @@ class Recommendations
   # @return [ Hash ] A hash like
   #                  { buy:A, overweight:B, hold:C, underweight:D, sell:C }
   def recent
-    {
-      buy:         @data[:BUY_RECENT],
-      overweight:  @data[:OVERWEIGHT_RECENT],
-      hold:        @data[:HOLD_RECENT],
-      underweight: @data[:UNDERWEIGHT_RECENT],
-      sell:        @data[:SELL_RECENT]
-    }
+    ratings_for :BUY_RECENT,
+                :OVERWEIGHT_RECENT,
+                :HOLD_RECENT,
+                :UNDERWEIGHT_RECENT,
+                :SELL_RECENT
   end
 
   # The rating figures from 3 months ago.
@@ -86,13 +89,11 @@ class Recommendations
   # @return [ Hash ] A hash like
   #                  { buy:A, overweight:B, hold:C, underweight:D, sell:C }
   def last_quarter
-    {
-      buy:         @data[:BUY_M3],
-      overweight:  @data[:OVERWEIGHT_M3],
-      hold:        @data[:HOLD_M3],
-      underweight: @data[:UNDERWEIGHT_M3],
-      sell:        @data[:SELL_M3]
-    }
+    ratings_for :BUY_M3,
+                :OVERWEIGHT_M3,
+                :HOLD_M3,
+                :UNDERWEIGHT_M3,
+                :SELL_M3
   end
 
   # The date from the last update.
@@ -100,5 +101,11 @@ class Recommendations
   # @return [ String ] A string in ISO representation.
   def updated_at
     @data[:DATETIME_LAST_UPDATE]
+  end
+
+  private
+
+  def ratings_for(*keys)
+    Hash[RATING_TYPES.zip(@data.values_at(*keys))]
   end
 end
