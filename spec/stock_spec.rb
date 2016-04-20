@@ -6,7 +6,7 @@ RSpec.describe Stock do
   let(:stock) { described_class.new(json) }
   subject { stock }
 
-  it { is_expected.to respond_to(:data) }
+  it { is_expected.to respond_to(:data, :to_json) }
 
   describe '#data' do
     it { expect(stock.data).to_not be_a(Array) }

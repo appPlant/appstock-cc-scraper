@@ -7,9 +7,16 @@ require 'rubygems'
 require 'bundler/setup'
 
 require 'securerandom'
+require 'benchmark'
 require 'scraper'
 
-drop_box = ENV['DROP_BOX'] || File.join(__dir__, "vendor/mount/#{SecureRandom.uuid}")
-stocks   = %w(US30303M1027 US0231351067)
+drop_box = File.join(__dir__, "vendor/mount/#{SecureRandom.uuid}")
+stocks   = IO.read('vendor/mount/f03dc1bf-cacb-467b-8ff8-24c3e0716e70.txt').split
 
-Scraper.new(drop_box: drop_box).run(*stocks)
+puts "Scraping #{stocks.count} stocks from cortal consors..."
+
+time = Benchmark.realtime do
+  Scraper.new(drop_box: drop_box).run(*stocks)
+end
+
+puts "Time elapsed #{time.round(2)} seconds"

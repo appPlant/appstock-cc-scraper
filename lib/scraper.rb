@@ -1,3 +1,4 @@
+require 'securerandom'
 require 'typhoeus'
 require 'stock'
 require 'oj'
@@ -68,9 +69,35 @@ class Scraper
   #
   # @return [ Void ]
   def on_complete(res)
-    json  = Oj.load(res.body, symbol_keys: true)[0]
+    json  = Oj.load(res.body, symbol_keys: true)
+    json  = json[0] if json.is_a? Array
     stock = Stock.new(json)
 
-    puts stock.inspect
+    drop_stock(stock) if stock.available?
+  rescue => e
+    $stderr.puts res.effective_url
+    $stderr.puts e.message
+  end
+
+  # Save the scraped stock data in a file under @drop_box dir.
+  #
+  # @param [ Stock ] stock
+  def drop_stock(stock)
+    filepath = File.join(@drop_box, filename_for(stock))
+
+    IO.write(filepath, stock.to_json)
+  end
+
+  # Generate a filename for a stock.
+  #
+  # @example Filename for Facebook stock
+  #   filename_for(facebook)
+  #   #=> 'facebook-01bff156-5e39-4c13-b35a-8380814ef07f.json'
+  #
+  # @param [ Stock ] stock The specified stock.
+  #
+  # @return [ String ] A filename of a JSON file.
+  def filename_for(stock)
+    "#{stock.isin}-#{SecureRandom.uuid}.json"
   end
 end
