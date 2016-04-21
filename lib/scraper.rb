@@ -1,7 +1,7 @@
 require 'securerandom'
 require 'typhoeus'
 require 'stock'
-require 'oj'
+require 'json'
 
 class Scraper
   # Intialize the scraper.
@@ -15,6 +15,7 @@ class Scraper
   def initialize(drop_box:)
     @drop_box = drop_box
     @hydra    = Typhoeus::Hydra.new
+    @counter  = 0
   end
 
   attr_reader :drop_box
@@ -29,7 +30,7 @@ class Scraper
   #
   # @param [ Array<String> ] List of ISIN numbers.
   #
-  # @return [ Void ]
+  # @return [ Int ] Total number of scraped stocks.
   def run(*isins)
     return unless isins.any?
 
@@ -38,6 +39,9 @@ class Scraper
     isins.each { |isin| scrape isin }
 
     @hydra.run
+    @counter
+  ensure
+    @counter = 0
   end
 
   private
@@ -69,14 +73,27 @@ class Scraper
   #
   # @return [ Void ]
   def on_complete(res)
-    json  = Oj.load(res.body, symbol_keys: true)
-    json  = json[0] if json.is_a? Array
+    json  = parse_response(res)
     stock = Stock.new(json)
 
-    drop_stock(stock) if stock.available?
+    return unless stock.available?
+
+    drop_stock(stock)
+    @counter += 1
   rescue => e
-    $stderr.puts res.effective_url
-    $stderr.puts e.message
+    $stderr.puts "#{res.effective_url}\n#{e.message}"
+  end
+
+  # Parses the response body to ruby object.
+  #
+  # @param [ res ] The response with JSON encoded body.
+  #
+  # @return [ Object ] The parsed ruby object.
+  def parse_response(res)
+    return nil unless res.success?
+    json = JSON.parse(res.body, symbolize_names: true)
+    json = json[0] if json.is_a? Array
+    json
   end
 
   # Save the scraped stock data in a file under @drop_box dir.

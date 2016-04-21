@@ -10,13 +10,15 @@ require 'securerandom'
 require 'benchmark'
 require 'scraper'
 
-drop_box = File.join(__dir__, "vendor/mount/#{SecureRandom.uuid}")
-stocks   = IO.read('vendor/mount/f03dc1bf-cacb-467b-8ff8-24c3e0716e70.txt').split
+dir    = File.join(__dir__, "vendor/mount/#{SecureRandom.uuid}")
+stocks = IO.read('vendor/mount/f03dc1bf-cacb-467b-8ff8-24c3e0716e70.txt').split
+count  = 0
 
-puts "Scraping #{stocks.count} stocks from cortal consors..."
+puts "Scraping #{stocks.count} stocks from consorsbank..."
 
 time = Benchmark.realtime do
-  Scraper.new(drop_box: drop_box).run(*stocks)
+  count = Scraper.new(drop_box: dir).run(*stocks)
 end
 
+puts "Scraped #{count} stocks"
 puts "Time elapsed #{time.round(2)} seconds"

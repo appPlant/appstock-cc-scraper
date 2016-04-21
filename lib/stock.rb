@@ -1,4 +1,4 @@
-require 'oj'
+require 'json'
 require 'basic'
 require 'screener'
 require 'recommendations'
@@ -53,7 +53,7 @@ class Stock
   #
   # @return [ Boolean ] A true value means available on that platform.
   def available?
-    @data && !name.nil?
+    @data && isin
   end
 
   # JSON representation of the stock instance.
@@ -102,13 +102,13 @@ class Stock
       }
     }
 
-    Oj.dump(data, symbol_keys: false)
+    JSON.fast_generate(data, symbolize_names: false)
   end
 
   # Descriptive presentation of the stock instance.
   #
   # @return [ String ]
   def inspect
-    "#{name} #{intraday.price} #{intraday.currency} #{intraday.performance}%"
+    "#{name} #{intra.price} #{intra.currency} #{intra.performance}%"
   end
 end
