@@ -1,96 +1,71 @@
-require 'oj'
-
 RSpec.describe Performance do
-  let(:stock) { described_class.new(json) }
-  subject { stock }
+  let(:perf) { described_class.new(json) }
+  subject { perf }
 
   context 'when PerformanceV1 is present' do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
-    let(:json) { Oj.load(raw, symbol_keys: true)[0] }
+    let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
 
-    describe '#w_1' do
-      it { expect(stock.w_1).to eq(0.14) }
+    describe '#of' do
+      context('1 week') { it { expect(perf.of(1, :week)).to eq(0.14) } }
+      context('4 weeks') { it { expect(perf.of(4, :weeks)).to eq(-2.45) } }
+      context('52 weeks') { it { expect(perf.of(52, :weeks)).to eq(25.51) } }
+      context('current year') { it { expect(perf.of(:current, :year)).to eq(-0.75) } }
+      context('3 years') { it { expect(perf.of(3, :years)).to eq(377.76) } }
     end
 
-    describe '#w_4' do
-      it { expect(stock.w_4).to eq(-2.45) }
+    describe '#high' do
+      it { expect(perf.high).to eq(107.86) }
     end
 
-    describe '#w_52' do
-      it { expect(stock.w_52).to eq(25.51) }
+    describe '#low' do
+      it { expect(perf.low).to eq(61.86) }
     end
 
-    describe '#y_c' do
-      it { expect(stock.y_c).to eq(-0.75) }
+    describe '#high_at' do
+      it { expect(perf.high_at).to eq('2016-02-01T23:00:00+0000') }
     end
 
-    describe '#y_3' do
-      it { expect(stock.y_3).to eq(377.76) }
-    end
-
-    describe '#w_52_high' do
-      it { expect(stock.w_52_high).to eq(107.86) }
-    end
-
-    describe '#w_52_low' do
-      it { expect(stock.w_52_low).to eq(61.86) }
-    end
-
-    describe '#w_52_high_at' do
-      it { expect(stock.w_52_high_at).to eq('2016-02-01T23:00:00+0000') }
-    end
-
-    describe '#w_52_low' do
-      it { expect(stock.w_52_low_at).to eq('2015-08-23T22:00:00+0000') }
+    describe '#low' do
+      it { expect(perf.low_at).to eq('2015-08-23T22:00:00+0000') }
     end
   end
 
   context 'when PerformanceV1 is missing' do
     let(:json) { {} }
 
-    describe '#w_1' do
-      it { expect { stock.w_1 }.to_not raise_error }
-      it { expect(stock.w_1).to be_nil }
+    describe '#of' do
+      it { expect { perf.of(1, :week) }.to_not raise_error }
+      it { expect(perf.of(1, :week)).to be_nil }
+
+      context 'when called for unsupported time frame' do
+        it { expect { perf.of(2, :weeks) }.to raise_error(RuntimeError) }
+        it { expect { perf.of(2, :years) }.to raise_error(RuntimeError) }
+      end
+
+      context 'when called for unsupported time unit' do
+        it { expect { perf.of(3, :days) }.to raise_error(RuntimeError) }
+      end
     end
 
-    describe '#w_4' do
-      it { expect { stock.w_4 }.to_not raise_error }
-      it { expect(stock.w_4).to be_nil }
+    describe '#high' do
+      it { expect { perf.high }.to_not raise_error }
+      it { expect(perf.high).to be_nil }
     end
 
-    describe '#w_52' do
-      it { expect { stock.w_52 }.to_not raise_error }
-      it { expect(stock.w_52).to be_nil }
+    describe '#low' do
+      it { expect { perf.low }.to_not raise_error }
+      it { expect(perf.low).to be_nil }
     end
 
-    describe '#y_c' do
-      it { expect { stock.y_c }.to_not raise_error }
-      it { expect(stock.y_c).to be_nil }
+    describe '#high_at' do
+      it { expect { perf.high_at }.to_not raise_error }
+      it { expect(perf.high_at).to be_nil }
     end
 
-    describe '#y_3' do
-      it { expect { stock.y_3 }.to_not raise_error }
-      it { expect(stock.y_3).to be_nil }
-    end
-
-    describe '#w_52_high' do
-      it { expect { stock.w_52_high }.to_not raise_error }
-      it { expect(stock.w_52_high).to be_nil }
-    end
-
-    describe '#w_52_low' do
-      it { expect { stock.w_52_low }.to_not raise_error }
-      it { expect(stock.w_52_low).to be_nil }
-    end
-
-    describe '#w_52_high_at' do
-      it { expect { stock.w_52_high_at }.to_not raise_error }
-      it { expect(stock.w_52_high_at).to be_nil }
-    end
-
-    describe '#w_52_low_at' do
-      it { expect { stock.w_52_low_at }.to_not raise_error }
-      it { expect(stock.w_52_low_at).to be_nil }
+    describe '#low_at' do
+      it { expect { perf.low_at }.to_not raise_error }
+      it { expect(perf.low_at).to be_nil }
     end
   end
 end

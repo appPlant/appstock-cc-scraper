@@ -1,12 +1,10 @@
-require 'oj'
-
 RSpec.describe Screener do
   let(:stock) { described_class.new(json) }
   subject { stock }
 
   context 'when ScreenerV1 is present' do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
-    let(:json) { Oj.load(raw, symbol_keys: true)[0] }
+    let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
 
     describe '#per' do
       it { expect(stock.per).to eq(22.57) }

@@ -4,6 +4,7 @@ require 'screener'
 require 'recommendations'
 require 'performance'
 require 'intra_day'
+require 'technical_analysis'
 
 # An instance indicates one finance security.
 class Stock
@@ -49,6 +50,13 @@ class Stock
   alias intraday intra_day
   alias intra    intra_day
 
+  # Technical figures of the stock.
+  #
+  # @return [ IntraDay ] Informations about the technical analysis.
+  def technical_analysis
+    @technical_analysis ||= TechnicalAnalysis.new(@data)
+  end
+
   # Availability of the stock on cortal consors.
   #
   # @return [ Boolean ] A true value means available on that platform.
@@ -61,6 +69,9 @@ class Stock
   # @return [ String ] JSON encoded string.
   def to_json
     data = {
+      source: :consorsbank,
+      created_at: Time.now,
+      version: 1,
       basic: { name: name, wkn: wkn, isin: isin, symbol: symbol },
       screener: {
         per: screener.per,
@@ -71,34 +82,60 @@ class Stock
       intra: {
         price: intra.price,
         currency: intra.currency,
-        high: intra.highest_price,
-        low: intra.lowest_price,
+        high: intra.high,
+        low: intra.low,
         performance: intra.performance,
         volume: intra.volume,
+        realtime: intra.realtime?,
         updated_at: intra.updated_at
       },
       performance: {
-        w_1: performance.w_1,
-        w_4: performance.w_4,
-        w_52: performance.w_52,
-        w_52_high: performance.w_52_high,
-        w_52_low: performance.w_52_low,
-        w_52_high_at: performance.w_52_high_at,
-        w_52_low_at: performance.w_52_low_at,
-        y_3: performance.y_3,
-        y_c: performance.y_c
+        weeks: {
+          '1': performance.of(1, :week),
+          '4': performance.of(4, :weeks),
+          '52': performance.of(52, :weeks)
+        },
+        years: {
+          current: performance.of(:current, :year),
+          '3': performance.of(3, :years)
+        },
+        high: { price: performance.high, at: performance.high_at },
+        low: { price: performance.low, at: performance.low_at }
       },
       recommendations: {
         count: recommendations.count,
         upgrades: recommendations.upgrades,
         downgrades: recommendations.downgrades,
         consensus: recommendations.consensus,
-        target_price: recommendations.target_price,
-        currency: recommendations.currency,
+        target_price: {
+          value: recommendations.target_price,
+          currency: recommendations.currency
+        },
         expected_performance: recommendations.expected_performance,
         recent: recommendations.recent,
         last_quarter: recommendations.last_quarter,
         updated_at: recommendations.updated_at
+      },
+      technical_analysis: {
+        macd: technical_analysis.macd,
+        momentum: {
+          '20': technical_analysis.momentum(20),
+          '50': technical_analysis.momentum(50),
+          '250': technical_analysis.momentum(250),
+          trend: technical_analysis.momentum(:trend)
+        },
+        moving_average: {
+          '5': technical_analysis.moving_average(5),
+          '20': technical_analysis.moving_average(20),
+          '200': technical_analysis.moving_average(200),
+          trend: technical_analysis.moving_average(:trend)
+        },
+        rsi: {
+          '5': technical_analysis.rsi(5),
+          '20': technical_analysis.rsi(20),
+          '250': technical_analysis.rsi(250),
+          trend: technical_analysis.rsi(:trend)
+        }
       }
     }
 

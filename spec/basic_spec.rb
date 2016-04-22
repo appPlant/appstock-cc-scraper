@@ -1,12 +1,10 @@
-require 'oj'
-
 RSpec.describe Stock do
   let(:stock) { described_class.new(json) }
   subject { stock }
 
   context 'when BasicV1 is present' do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
-    let(:json) { Oj.load(raw, symbol_keys: true)[0] }
+    let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
 
     describe '#name' do
       it { expect(stock.name).to eq('FACEBOOK INC.') }

@@ -1,12 +1,10 @@
-require 'oj'
-
 RSpec.describe Recommendations do
   let(:stock) { described_class.new(json) }
   subject { stock }
 
   context 'when RecommendationV1 is present' do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
-    let(:json) { Oj.load(raw, symbol_keys: true)[0] }
+    let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
 
     describe '#count' do
       it { expect(stock.count).to eq(38) }

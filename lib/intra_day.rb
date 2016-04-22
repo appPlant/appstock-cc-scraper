@@ -17,14 +17,14 @@ class IntraDay
   # The highes traded price.
   #
   # @return [ Float ]
-  def highest_price
+  def high
     @data[:HIGH]
   end
 
   # The lowest traded price.
   #
   # @return [ Float ]
-  def lowest_price
+  def low
     @data[:LOW]
   end
 

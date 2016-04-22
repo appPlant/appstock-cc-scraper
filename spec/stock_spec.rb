@@ -1,8 +1,6 @@
-require 'oj'
-
 RSpec.describe Stock do
   let(:raw)   { IO.read('spec/fixtures/facebook.json') }
-  let(:json)  { Oj.load(raw, symbol_keys: true)[0] }
+  let(:json)  { JSON.parse(raw, symbolize_names: true)[0] }
   let(:stock) { described_class.new(json) }
   subject { stock }
 
@@ -26,6 +24,10 @@ RSpec.describe Stock do
 
   describe '#intraday' do
     it { expect(stock.intraday).to be_a(IntraDay) }
+  end
+
+  describe '#technical_analysis' do
+    it { expect(stock.technical_analysis).to be_a(TechnicalAnalysis) }
   end
 
   describe '#inspect' do

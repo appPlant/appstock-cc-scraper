@@ -1,23 +1,21 @@
-require 'oj'
-
 RSpec.describe IntraDay do
   let(:stock) { described_class.new(json) }
   subject { stock }
 
   context 'when PriceV1 is present' do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
-    let(:json) { Oj.load(raw, symbol_keys: true)[0] }
+    let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
 
     describe '#price' do
       it { expect(stock.price).to eq(97.653) }
     end
 
-    describe '#highest_price' do
-      it { expect(stock.highest_price).to eq(97.91) }
+    describe '#high' do
+      it { expect(stock.high).to eq(97.91) }
     end
 
-    describe '#lowest_price' do
-      it { expect(stock.lowest_price).to eq(96.021) }
+    describe '#low' do
+      it { expect(stock.low).to eq(96.021) }
     end
 
     describe '#currency' do
@@ -53,14 +51,14 @@ RSpec.describe IntraDay do
       it { expect(stock.price).to be_nil }
     end
 
-    describe '#highest_price' do
-      it { expect { stock.highest_price }.to_not raise_error }
-      it { expect(stock.highest_price).to be_nil }
+    describe '#high' do
+      it { expect { stock.high }.to_not raise_error }
+      it { expect(stock.high).to be_nil }
     end
 
-    describe '#lowest_price' do
-      it { expect { stock.lowest_price }.to_not raise_error }
-      it { expect(stock.lowest_price).to be_nil }
+    describe '#low' do
+      it { expect { stock.low }.to_not raise_error }
+      it { expect(stock.low).to be_nil }
     end
 
     describe '#currency' do
