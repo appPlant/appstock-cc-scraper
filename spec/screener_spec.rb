@@ -1,6 +1,5 @@
 RSpec.describe Screener do
   let(:stock) { described_class.new(json) }
-  subject { stock }
 
   context 'when ScreenerV1 is present' do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }

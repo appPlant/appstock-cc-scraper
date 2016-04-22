@@ -5,6 +5,7 @@ require 'recommendations'
 require 'performance'
 require 'intra_day'
 require 'technical_analysis'
+require 'trading_central'
 
 # Each instance of class Stock indicates one finance security. The provided
 # informations are reaching from basic properties like name and ISIN over
@@ -61,7 +62,7 @@ class Stock
   #
   # @return [ IntraDay ] Informations about the price.
   def intra_day
-    @price ||= IntraDay.new(@data)
+    @intra ||= IntraDay.new(@data)
   end
 
   alias intraday intra_day
@@ -69,9 +70,16 @@ class Stock
 
   # Technical figures of the stock.
   #
-  # @return [ IntraDay ] Informations about the technical analysis.
+  # @return [ TechnicalAnalysis ] Informations about the technical analysis.
   def technical_analysis
     @technical_analysis ||= TechnicalAnalysis.new(@data)
+  end
+
+  # Technical figures of the stock from tradingcentral.
+  #
+  # @return [ TradingCentral ] Informations from Tradingcentral.
+  def trading_central
+    @trading_central ||= TradingCentral.new(@data)
   end
 
   # Availability of the stock on cortal consors.
@@ -153,6 +161,14 @@ class Stock
           '250': technical_analysis.rsi(250),
           trend: technical_analysis.rsi(:trend)
         }
+      },
+      trading_central: {
+        pivot: trading_central.pivot,
+        support: trading_central.support_levels,
+        resistance: trading_central.resistance_levels,
+        short_term: trading_central.short_term_potential,
+        medium_term: trading_central.medium_term_potential,
+        updated_at: trading_central.updated_at
       }
     }
 

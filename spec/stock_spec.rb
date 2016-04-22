@@ -30,6 +30,34 @@ RSpec.describe Stock do
     it { expect(stock.technical_analysis).to be_a(TechnicalAnalysis) }
   end
 
+  describe '#trading_central' do
+    it { expect(stock.trading_central).to be_a(TradingCentral) }
+  end
+
+  describe '#available?' do
+    context 'when ISIN is present' do
+      it { expect(stock.available?).to be_truthy }
+    end
+
+    context 'when ISIN is missing' do
+      before { allow(stock).to receive(:isin).and_return(nil) }
+      it { expect(stock.available?).to be_falsy }
+    end
+
+    context 'when data is missing' do
+      subject { described_class.new(nil).available? }
+      it { is_expected.to be_falsy }
+    end
+  end
+
+  describe '#to_json' do
+    subject { stock.to_json }
+    it { is_expected.to be_a(String) }
+    it('should be valid JSON') do
+      expect { JSON.parse(subject) }.to_not raise_error
+    end
+  end
+
   describe '#inspect' do
     it { expect(stock.inspect).to match(stock.name) }
   end

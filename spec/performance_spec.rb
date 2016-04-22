@@ -1,6 +1,5 @@
 RSpec.describe Performance do
   let(:perf) { described_class.new(json) }
-  subject { perf }
 
   context 'when PerformanceV1 is present' do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }

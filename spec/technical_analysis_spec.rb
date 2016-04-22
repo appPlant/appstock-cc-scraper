@@ -1,6 +1,5 @@
 RSpec.describe TechnicalAnalysis do
   let(:stock) { described_class.new(json) }
-  subject { stock }
 
   context 'when TechnicalAnalysisV1 is present' do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }

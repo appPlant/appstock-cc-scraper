@@ -73,21 +73,14 @@ class Scraper
   #
   # @return [ Void ]
   def on_complete(res)
-    unless res.success?
-      require 'pry'
-      binding.pry
-      puts 'failed'
-      @hydra.add Typhoeus::Request.new(res.effective_url)
-      return
-    end
-
     json  = parse_response(res)
     stock = Stock.new(json)
 
+    @hydra.add Typhoeus::Request.new(res.effective_url) if res.code == 503
     return unless stock.available?
 
     drop_stock(stock)
-    puts @counter += 1
+    @counter += 1
   rescue => e
     $stderr.puts "#{res.effective_url}\n#{e.message}"
   end

@@ -1,6 +1,5 @@
 RSpec.describe IntraDay do
   let(:stock) { described_class.new(json) }
-  subject { stock }
 
   context 'when PriceV1 is present' do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
