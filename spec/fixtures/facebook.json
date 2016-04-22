@@ -603,6 +603,129 @@
             "UNDERWEIGHT_RECENT":0,
             "UP":0
         },
+        "ScreenerAnalysisV1":{
+            "CHANCE":{
+                "DIVIDEND":{
+                    "LONG_TEXT":"Die Gesellschaft bezahlt keine Dividende.",
+                    "SHORT_TEXT":"Keine Dividende",
+                    "STAR":null,
+                    "VALUE":0
+                },
+                "EARINGS_REVISION":{
+                    "LONG_TEXT":"Beispielsweise bedeutet ein Wert von 2,8, dass die Analysten in den letzten sieben Wochen ihre Schätzungen überprüft und um 2,8% angehoben haben. Ein negativer Wert bedeutet hingegen, dass die Ertragsprognose reduziert wurde.",
+                    "SHORT_TEXT":"Hier werden die Werte der überprüften Erträge aufgeführt",
+                    "STAR":null,
+                    "VALUE":-14
+                },
+                "EARINGS_REVISION_TREND":{
+                    "LONG_TEXT":"Die Gewinnerwartung der Analysten pro Aktie liegen heute niedriger als vor sieben Wochen. Dieser negative Trend hat am 19. April 2016 bei einem Kurs von 112,29 USD eingesetzt.",
+                    "SHORT_TEXT":"Negative Analystenhaltung seit 19. April 2016",
+                    "STAR":0,
+                    "VALUE":-1
+                },
+                "GROWTH_BY_PRICE_EARNING_RATION":{
+                    "LONG_TEXT":"Ein \"Verhältnis zwischen Wachstum plus geschätzte Dividende und KGV\" von über 0,9 weist auf einen Preisabschlag gegenüber dem normalen Preis für das Wachstumspotential hin, von in diesem Fall 23,70%.",
+                    "SHORT_TEXT":"23,70% Abschlag relativ zur Wachstumserwartung",
+                    "STAR":null,
+                    "VALUE":1.18
+                },
+                "LONGTERM_GROWTH":{
+                    "LONG_TEXT":"Die durchschnittlichen jährlichen Wachstumsraten gelten für die Gewinne von heute bis 2017.",
+                    "SHORT_TEXT":"Wachstum heute bis 2017 p.a.",
+                    "STAR":null,
+                    "VALUE":31.89
+                },
+                "LONG_TERM_PRICE_EARING":{
+                    "LONG_TEXT":"Das erwartete KGV (Kurs-Gewinn-Verhältnis) gilt für das Jahr 2017.",
+                    "SHORT_TEXT":"Erwartetes KGV für 2017",
+                    "STAR":null,
+                    "VALUE":27.04
+                },
+                "MARKET_CAPITALIZATION":{
+                    "LONG_TEXT":"Mit einer Marktkapitalisierung von &gt;$5 Mrd., ist FACEBOOK INCO. ein hoch kapitalisierter Titel.",
+                    "SHORT_TEXT":"Grosser Marktwert",
+                    "STAR":null,
+                    "VALUE":319.61
+                },
+                "MEDIUM_TERM_TECHNICAL_TREND":{
+                    "LONG_TEXT":"Der mittelfristige technische 40-Tage Trend ist seit dem 26. Februar 2016 positiv. Der bestätigte technische Trendwendepunkt von +1,75% entspricht 108,17 USD.",
+                    "SHORT_TEXT":"Positive Tendenz seit dem 26. Februar 2016",
+                    "STAR":1,
+                    "VALUE":1
+                },
+                "NUMBER_OF_ANALYSTS":{
+                    "LONG_TEXT":"In den zurückliegenden sieben Wochen haben durchschnittlich 46 Analysten eine Schätzung des Gewinns pro Aktie für diesen Titel abgegeben.",
+                    "SHORT_TEXT":"Starkes Analysteninteresse",
+                    "STAR":null,
+                    "VALUE":46
+                },
+                "RELATIVE_PERFORMANCE_W4":{
+                    "LONG_TEXT":"Die relative \"Underperformance\" der letzten vier Wochen im Vergleich zum SP500 beträgt -1,75%.",
+                    "SHORT_TEXT":"<warnsign/> Unter Druck (vs. SP500)",
+                    "STAR":0,
+                    "VALUE":-1.75
+                },
+                "TECHNICAL_REVERSE":{
+                    "LONG_TEXT":"Überschreitet der Kurs eines Titels diesen Punkt, kann dies ein frühzeitiges Anzeichen für einen möglichen Kauf oder Verkauf sein.",
+                    "SHORT_TEXT":"Die technische Umkehr zeigt den Kurs an, bei dem wir eine Trendwende erwarten",
+                    "STAR":null,
+                    "VALUE":112.02
+                },
+                "VALUATION_RATING":{
+                    "LONG_TEXT":"Auf Basis des Wachstumspotentials und anderer Messwerte erscheint die Aktie leicht unterbewertet.",
+                    "SHORT_TEXT":"Leicht unterbewertet",
+                    "STAR":1,
+                    "VALUE":1
+                }
+            },
+            "DATETIME_ANALYSIS":"2016-04-18T22:00:00+0000",
+            "ISO_CURRENCY":"USD",
+            "PRICE_ANALYSIS":112.29,
+            "RISK":{
+                "BAD_NEWS_FACTOR":{
+                    "LONG_TEXT":"Der Titel verzeichnet bei unternehmensspezifischen Problemen i.d.R. geringe Kursabschläge in Höhe von durchschnittlich 1,47%.",
+                    "RISK":1,
+                    "SHORT_TEXT":"Geringe Kursrückgänge bei spezifischen Problemen",
+                    "VALUE":147
+                },
+                "BEAR_MARKET_FACTOR":{
+                    "LONG_TEXT":"Die Aktie tendiert dazu, Indexrückgänge in etwa gleichem Umfang mitzuvollziehen.",
+                    "RISK":0,
+                    "SHORT_TEXT":"Mittleres Risiko bei Indexrückgängen",
+                    "VALUE":-2
+                },
+                "BETA":{
+                    "LONG_TEXT":"Die Aktie tendiert dazu, pro 1% Indexbewegung mit einem Ausschlag von 1,34% zu reagieren.",
+                    "RISK":null,
+                    "SHORT_TEXT":"Hohe Anfälligkeit vs. SP500",
+                    "VALUE":134
+                },
+                "CORRELATION":{
+                    "LONG_TEXT":"70,00% der Kursschwankungen werden durch Indexbewegungen verursacht.",
+                    "RISK":null,
+                    "SHORT_TEXT":"Starke Korrelation mit dem SP500",
+                    "VALUE":0.7
+                },
+                "MARKET_CAPITALIZATION":{
+                    "LONG_TEXT":"Mit einer Marktkapitalisierung von &gt;$5 Mrd., ist FACEBOOK INCO. ein hoch kapitalisierter Titel.",
+                    "RISK":null,
+                    "SHORT_TEXT":"Grosser Marktwert",
+                    "VALUE":319.61
+                },
+                "VOLATILITY_12M":{
+                    "LONG_TEXT":"Ein Titel mit hoher Volatilität weist starke Kursbewegungen auf. Stabile Werte mit geringen Kursschwankungen haben einen niedrigen Volatilitätswert.",
+                    "RISK":null,
+                    "SHORT_TEXT":"Die Volatilität einer Aktie misst die Stärke der Kursbewegungen während eines definierten Zeitraums",
+                    "VALUE":32.56
+                },
+                "VOLATILITY_1M":{
+                    "LONG_TEXT":"Ein Titel mit hoher Volatilität weist starke Kursbewegungen auf. Stabile Werte mit geringen Kursschwankungen haben einen niedrigen Volatilitätswert.",
+                    "RISK":null,
+                    "SHORT_TEXT":"Die Volatilität einer Aktie misst die Stärke der Kursbewegungen während eines definierten Zeitraums",
+                    "VALUE":20.26
+                }
+            }
+        },
         "ScreenerV1":{
             "DATETIME_ANALYSIS":"2016-04-14T22:00:00+0000",
             "INTEREST":3,

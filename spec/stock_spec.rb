@@ -22,8 +22,8 @@ RSpec.describe Stock do
     it { expect(stock.performance).to be_a(Performance) }
   end
 
-  describe '#intraday' do
-    it { expect(stock.intraday).to be_a(IntraDay) }
+  describe '#intra' do
+    it { expect(stock.intra).to be_a(IntraDay) }
   end
 
   describe '#technical_analysis' do
@@ -32,6 +32,10 @@ RSpec.describe Stock do
 
   describe '#trading_central' do
     it { expect(stock.trading_central).to be_a(TradingCentral) }
+  end
+
+  describe '#risk' do
+    it { expect(stock.risk).to be_a(Risk) }
   end
 
   describe '#available?' do

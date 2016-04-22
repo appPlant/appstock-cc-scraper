@@ -6,6 +6,7 @@ require 'performance'
 require 'intra_day'
 require 'technical_analysis'
 require 'trading_central'
+require 'risk'
 
 # Each instance of class Stock indicates one finance security. The provided
 # informations are reaching from basic properties like name and ISIN over
@@ -39,47 +40,51 @@ class Stock
 
   # Informations from thescreener about the stock.
   #
-  # @return [ Screener ] Information from thescreener.
+  # @return [ Screener ]
   def screener
     @screener ||= Screener.new(@data)
   end
 
   # Recommendations about the stock.
   #
-  # @return [ Screener ] Information about analyst recommendations.
+  # @return [ Recommendations ]
   def recommendations
     @recommendations ||= Recommendations.new(@data)
   end
 
   # Performance of the stock.
   #
-  # @return [ Performance ] Informations about the performance.
+  # @return [ Performance ]
   def performance
     @performance ||= Performance.new(@data)
   end
 
   # Price of the stock.
   #
-  # @return [ IntraDay ] Informations about the price.
-  def intra_day
+  # @return [ IntraDay ]
+  def intra
     @intra ||= IntraDay.new(@data)
   end
 
-  alias intraday intra_day
-  alias intra    intra_day
-
   # Technical figures of the stock.
   #
-  # @return [ TechnicalAnalysis ] Informations about the technical analysis.
+  # @return [ TechnicalAnalysis ]
   def technical_analysis
     @technical_analysis ||= TechnicalAnalysis.new(@data)
   end
 
   # Technical figures of the stock from tradingcentral.
   #
-  # @return [ TradingCentral ] Informations from Tradingcentral.
+  # @return [ TradingCentral ]
   def trading_central
     @trading_central ||= TradingCentral.new(@data)
+  end
+
+  # Risk figures of the stock from thescreener.
+  #
+  # @return [ Risk ]
+  def risk
+    @risk ||= Risk.new(@data)
   end
 
   # Availability of the stock on cortal consors.
@@ -115,15 +120,11 @@ class Stock
         updated_at: intra.updated_at
       },
       performance: {
-        weeks: {
-          '1': performance.of(1, :week),
-          '4': performance.of(4, :weeks),
-          '52': performance.of(52, :weeks)
-        },
-        years: {
-          current: performance.of(:current, :year),
-          '3': performance.of(3, :years)
-        },
+        '1w': performance.of(1, :week),
+        '4w': performance.of(4, :weeks),
+        '52w': performance.of(52, :weeks),
+        cy: performance.of(:current, :year),
+        '3y': performance.of(3, :years),
         high: { price: performance.high, at: performance.high_at },
         low: { price: performance.low, at: performance.low_at }
       },
@@ -169,6 +170,14 @@ class Stock
         short_term: trading_central.short_term_potential,
         medium_term: trading_central.medium_term_potential,
         updated_at: trading_central.updated_at
+      },
+      risk: {
+        bad_news_factor: risk.bad_news_factor,
+        bear_market_factor: risk.bear_market_factor,
+        beta: risk.beta,
+        volatility: { '1': risk.volatility(1), '12': risk.volatility(12) },
+        correlation: risk.correlation,
+        capitalization: risk.capitalization
       }
     }
 

@@ -14,8 +14,6 @@ class Screener
     @data[:LONG_TERM_PRICE_EARING]
   end
 
-  alias kgv per
-
   # The risk rating from thescreener.
   #
   # @return [ Int ] A number between -1 and 1.
