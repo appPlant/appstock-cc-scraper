@@ -38,6 +38,10 @@ RSpec.describe Stock do
     it { expect(stock.risk).to be_a(Risk) }
   end
 
+  describe '#chance' do
+    it { expect(stock.chance).to be_a(Chance) }
+  end
+
   describe '#available?' do
     context 'when ISIN is present' do
       it { expect(stock.available?).to be_truthy }

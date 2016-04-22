@@ -57,7 +57,7 @@ class Scraper
   #
   # @return [ Void ]
   def scrape(isin)
-    url = "https://www.consorsbank.de/ev/rest/de/marketdata/stocks?field=BasicV1&field=FundamentalV1&field=PerformanceV1&field=PriceV1&field=RecommendationV1&field=ScreenerV1&field=TechnicalAnalysisV1&field=TradingCentralV1&id=#{isin}" # rubocop:disable Metrics/LineLength
+    url = "https://www.consorsbank.de/ev/rest/de/marketdata/stocks?field=BasicV1&field=FundamentalV1&field=PerformanceV1&field=PriceV1&field=RecommendationV1&field=ScreenerV1&field=TechnicalAnalysisV1&field=TradingCentralV1&field=ScreenerAnalysisV1&id=#{isin}" # rubocop:disable Metrics/LineLength
     req = Typhoeus::Request.new(url)
 
     req.on_complete(&method(:on_complete))

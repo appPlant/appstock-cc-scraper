@@ -7,6 +7,7 @@ require 'intra_day'
 require 'technical_analysis'
 require 'trading_central'
 require 'risk'
+require 'chance'
 
 # Each instance of class Stock indicates one finance security. The provided
 # informations are reaching from basic properties like name and ISIN over
@@ -85,6 +86,13 @@ class Stock
   # @return [ Risk ]
   def risk
     @risk ||= Risk.new(@data)
+  end
+
+  # Outlook figures of the stock from thescreener.
+  #
+  # @return [ Chance ]
+  def chance
+    @chance ||= Chance.new(@data)
   end
 
   # Availability of the stock on cortal consors.
@@ -178,6 +186,19 @@ class Stock
         volatility: { '1': risk.volatility(1), '12': risk.volatility(12) },
         correlation: risk.correlation,
         capitalization: risk.capitalization
+      },
+      chance: {
+        dividend: chance.dividend,
+        earnings_revision: chance.earnings_revision,
+        earnings_trend: chance.earnings_trend,
+        long_term: chance.long_term_potential,
+        long_term_per: chance.long_term_per,
+        medium_term_technical_trend: chance.medium_term_technical_trend,
+        analysts: chance.analysts,
+        relative_performance: chance.relative_performance,
+        technical_reverse_price: chance.technical_reverse_price,
+        currency: chance.currency,
+        rating: chance.rating
       }
     }
 
