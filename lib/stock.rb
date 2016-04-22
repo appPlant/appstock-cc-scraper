@@ -6,7 +6,24 @@ require 'performance'
 require 'intra_day'
 require 'technical_analysis'
 
-# An instance indicates one finance security.
+# Each instance of class Stock indicates one finance security. The provided
+# informations are reaching from basic properties like name and ISIN over
+# intraday stats up to analyst recommendations and technical analysis results.
+#
+# @example Initializing a stock.
+#   stock = Stock.new(properties-from-consorsbank)
+#
+# @example Accessing the WKN code.
+#   stock.wkn
+#   #=> A1JWVX
+#
+# @example Get todays performance.
+#   stock.intra.performance
+#   #=> -1.59
+#
+# @example Convert the stock into a JSON structure
+#   stock.to_json
+#   #=> "{...}"
 class Stock
   include Basic
 
