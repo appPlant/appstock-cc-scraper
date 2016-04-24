@@ -4,7 +4,7 @@ require 'stock'
 require 'json'
 
 class Scraper
-
+  # List of valid fields for API v1
   FIELDS = [
     :PerformanceV1,
     :PriceV1,
@@ -43,9 +43,9 @@ class Scraper
   #
   # @return [ Int ] Total number of scraped stocks.
   def run(isins, fields: FIELDS, parallel: 200)
-    return unless isins.any?
-
     FileUtils.mkdir_p @drop_box
+
+    return if isins.empty?
 
     @hydra.max_concurrency = [0, parallel].max
     @counter               = 0
@@ -92,10 +92,8 @@ class Scraper
 
     return unless stock.available?
 
-    puts @counter += 1
     drop_stock(stock)
-  rescue => e
-    $stderr.puts "#{res.effective_url}\n#{e.message}"
+    @counter += 1
   end
 
   # Parses the response body to ruby object.
@@ -108,6 +106,8 @@ class Scraper
     json = JSON.parse(res.body, symbolize_names: true)
     json = json[0] if json.is_a? Array
     json
+  rescue JSON::ParserError
+    nil
   end
 
   # Save the scraped stock data in a file under @drop_box dir.
@@ -116,7 +116,7 @@ class Scraper
   def drop_stock(stock)
     filepath = File.join(@drop_box, filename_for(stock))
 
-    IO.write(filepath, stock.to_json)
+    File.open(filepath, 'w+') { |io| io << stock.to_json }
   end
 
   # Generate a filename for a stock.
