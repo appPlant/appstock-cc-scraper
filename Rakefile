@@ -5,19 +5,19 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'rubygems'
 require 'bundler/setup'
 
-require 'securerandom'
-require 'benchmark'
-require 'scraper'
+require 'rake_helpers/rspec_helper'
+require 'rake_helpers/cleanup_helper'
+require 'rake_helpers/tar_helper'
+require 'rake_helpers/upload_helper'
+require 'rake_helpers/scrape_helper'
 
-begin
-  require 'rspec/core/rake_task'
+include RSpecHelper
+include CleanupHelper
+include TarHelper
+include UploadHelper
+include ScrapeHelper
 
-  RSpec::Core::RakeTask.new(:spec) do |t|
-    t.rspec_opts = '--format documentation --color --require spec_helper'
-  end
-
-  task default: :spec
-rescue LoadError; end # rubocop:disable Lint/HandleExceptions
+set_spec_as_default_task
 
 namespace :scrape do
   desc 'Run Stock-Scraper to collect all data from consorsbank.de'
@@ -32,23 +32,20 @@ namespace :scrape do
 end
 
 desc 'Generate a tar archive of tmp/data'
-task :tar do
-  `tar cfvz tmp/data.tar.gz tmp/data/`
-end
+task(:tar) { create_archive }
 
-namespace :clear do
+desc 'Upload tmp/data.tar.gz to Dropbox'
+task(:upload) { upload_archive }
+
+namespace :cleanup do
   desc 'Cleanup data and archive'
-  task all: [:archive, :data]
+  task(:all) { rm_tmp_folder }
 
   desc 'Remove tmp/data folder'
-  task :data do
-    FileUtils.rm_rf 'tmp/data'
-  end
+  task(:data)  { rm_tmp_data_folder }
 
   desc 'Remove tmp/data.tar.gz'
-  task :archive do
-    FileUtils.rm_rf 'tmp/data.tar.gz'
-  end
+  task(:tar) { rm_archive }
 end
 
 namespace :scraper do
@@ -57,19 +54,9 @@ namespace :scraper do
 
     parallel = args[:parallel].to_i
     fields   = args[:fields].split.map(&:to_sym)
+    dir      = "tmp/data/#{SecureRandom.uuid}"
+    stocks   = IO.read('tmp/isins.txt').split
 
-    dir     = File.join(__dir__, 'tmp/data', SecureRandom.uuid)
-    stocks  = IO.read('tmp/isins.txt').split
-    scraper = Scraper.new(drop_box: dir)
-    count   = 0
-
-    puts "Scraping #{stocks.count} stocks from consorsbank..."
-
-    time = Benchmark.realtime do
-      count = scraper.run(stocks, parallel: parallel, fields: fields)
-    end
-
-    puts "Scraped #{count} stocks"
-    puts "Time elapsed #{time.round(2)} seconds"
+    run_scraper(stocks, dir, parallel, fields)
   end
 end

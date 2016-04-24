@@ -1,3 +1,4 @@
+
 # Informations about a partial aspect of a stock.
 class Partial
   # Initializer of the class.

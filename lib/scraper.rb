@@ -20,7 +20,7 @@ class Scraper
   # @example With a custom drop box location.
   #   Scraper.new drop_box: '/Users/katzer/tmp'
   #
-  # @param [ String ] drop_box: Optional information where to place the result.
+  # @param [ String ] drop_box: The folder where to place the stock data.
   #
   # @return [ Fetcher ] A new scraper instance.
   def initialize(drop_box:)
@@ -40,6 +40,8 @@ class Scraper
   #   run('US30303M1027', 'US0231351067')
   #
   # @param [ Array<String> ] isins List of ISIN numbers.
+  # @param [ Array<Symbol> ] fields Subset of Scraper::FIELDS.
+  # @param [ Int ] parallel Max number of parallel requests.
   #
   # @return [ Int ] Total number of scraped stocks.
   def run(isins, fields: FIELDS, parallel: 200)
