@@ -14,7 +14,7 @@ WORKDIR $APP_HOME
 
 COPY Gemfile $APP_HOME
 COPY Gemfile.lock $APP_HOME
-COPY tmp/isins.txt $APP_HOME/tmp
+# COPY tmp/isins.txt $APP_HOME/tmp
 
 RUN bundle config path vendor/bundle
 RUN bundle install --no-cache --without development test
