@@ -1,10 +1,12 @@
+require 'partial'
+
 # Informations from thescreener about the risk of the stock.
-class Risk
+class Risk < Partial
   # Initializer of the class.
   #
   # @param [ Hash ] raw The serialized raw data from BNP Paribas.
   def initialize(data)
-    @data = data.fetch(:ScreenerAnalysisV1, {})[:RISK] || {}
+    super data.fetch(:ScreenerAnalysisV1, {})[:RISK] || {}
   end
 
   # The value of the bad-news-factor.
@@ -66,7 +68,7 @@ class Risk
   #
   # @return [ Object ]
   def value_of(key)
-    @data[key][:VALUE]
+    data[key][:VALUE]
   rescue
     nil
   end

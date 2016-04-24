@@ -5,6 +5,10 @@ RSpec.describe Risk do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
     let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
 
+    describe '#available?' do
+      it { expect(stock.available?).to be_truthy }
+    end
+
     describe '#bad_news_factor' do
       it { expect(stock.bad_news_factor).to eq(147) }
     end
@@ -33,6 +37,10 @@ RSpec.describe Risk do
 
   context 'when ScreenerAnalysisV1 is missing' do
     let(:json) { {} }
+
+    describe '#available?' do
+      it { expect(stock.available?).to be_falsy }
+    end
 
     describe '#bad_news_factor' do
       it { expect { stock.bad_news_factor }.to_not raise_error }

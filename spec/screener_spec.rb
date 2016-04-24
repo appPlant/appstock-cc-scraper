@@ -5,6 +5,10 @@ RSpec.describe Screener do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
     let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
 
+    describe '#available?' do
+      it { expect(stock.available?).to be_truthy }
+    end
+
     describe '#per' do
       it { expect(stock.per).to eq(22.57) }
     end
@@ -24,6 +28,10 @@ RSpec.describe Screener do
 
   context 'when ScreenerV1 is missing' do
     let(:json) { {} }
+
+    describe '#available?' do
+      it { expect(stock.available?).to be_falsy }
+    end
 
     describe '#per' do
       it { expect { stock.per }.to_not raise_error }

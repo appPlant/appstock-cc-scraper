@@ -5,6 +5,10 @@ RSpec.describe IntraDay do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
     let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
 
+    describe '#available?' do
+      it { expect(stock.available?).to be_truthy }
+    end
+
     describe '#price' do
       it { expect(stock.price).to eq(97.653) }
     end
@@ -44,6 +48,10 @@ RSpec.describe IntraDay do
 
   context 'when PriceV1 is missing' do
     let(:json) { {} }
+
+    describe '#available?' do
+      it { expect(stock.available?).to be_falsy }
+    end
 
     describe '#price' do
       it { expect { stock.price }.to_not raise_error }

@@ -5,6 +5,10 @@ RSpec.describe Performance do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
     let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
 
+    describe '#available?' do
+      it { expect(perf.available?).to be_truthy }
+    end
+
     describe '#of' do
       context('1 week') { it { expect(perf.of(1, :week)).to eq(0.14) } }
       context('4 weeks') { it { expect(perf.of(4, :weeks)).to eq(-2.45) } }
@@ -32,6 +36,10 @@ RSpec.describe Performance do
 
   context 'when PerformanceV1 is missing' do
     let(:json) { {} }
+
+    describe '#available?' do
+      it { expect(perf.available?).to be_falsy }
+    end
 
     describe '#of' do
       it { expect { perf.of(1, :week) }.to_not raise_error }

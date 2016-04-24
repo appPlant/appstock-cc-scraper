@@ -5,6 +5,10 @@ RSpec.describe Recommendations do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
     let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
 
+    describe '#available?' do
+      it { expect(stock.available?).to be_truthy }
+    end
+
     describe '#count' do
       it { expect(stock.count).to eq(38) }
     end
@@ -52,6 +56,10 @@ RSpec.describe Recommendations do
 
   context 'when RecommendationV1 is missing' do
     let(:json) { {} }
+
+    describe '#available?' do
+      it { expect(stock.available?).to be_falsy }
+    end
 
     describe '#count' do
       it { expect { stock.count }.to_not raise_error }

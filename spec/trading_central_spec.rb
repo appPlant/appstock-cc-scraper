@@ -5,6 +5,10 @@ RSpec.describe TradingCentral do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
     let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
 
+    describe '#available?' do
+      it { expect(stock.available?).to be_truthy }
+    end
+
     describe '#pivot' do
       it { expect(stock.pivot).to eq(103.9) }
     end
@@ -36,6 +40,10 @@ RSpec.describe TradingCentral do
 
   context 'when TradingCentralV1 is missing' do
     let(:json) { {} }
+
+    describe '#available?' do
+      it { expect(stock.available?).to be_falsy }
+    end
 
     describe '#pivot' do
       it { expect { stock.pivot }.to_not raise_error }

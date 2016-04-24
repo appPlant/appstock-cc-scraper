@@ -1,10 +1,12 @@
+require 'partial'
+
 # Informations about the performance of a stock.
-class Performance
+class Performance < Partial
   # Initializer of the class.
   #
   # @param [ Hash ] raw The serialized raw data from BNP Paribas.
   def initialize(data)
-    @data = data[:PerformanceV1] || {}
+    super data[:PerformanceV1] || {}
   end
 
   # The performance of the specified time period.
@@ -41,14 +43,14 @@ class Performance
   #
   # @return [ String ] ISO formated date time.
   def high_at
-    @data[:DATETIME_W52_HIGH]
+    data[:DATETIME_W52_HIGH]
   end
 
   # The date of highest price within the last 52 weeks.
   #
   # @return [ String ] ISO formated date time.
   def low_at
-    @data[:DATETIME_W52_LOW]
+    data[:DATETIME_W52_LOW]
   end
 
   private
@@ -86,7 +88,7 @@ class Performance
   #
   # @return [ Float ]
   def value_for(key)
-    @data[key].round(2)
+    data[key].round(2)
   rescue
     nil
   end

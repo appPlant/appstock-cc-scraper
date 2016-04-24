@@ -1,11 +1,13 @@
+require 'partial'
+
 # Informations from thescreener about the outlook of the stock.
-class Chance
+class Chance < Partial
   # Initializer of the class.
   #
   # @param [ Hash ] raw The serialized raw data from BNP Paribas.
   def initialize(data)
     @base = data[:ScreenerAnalysisV1] || {}
-    @data = @base[:CHANCE] || {}
+    super @base[:CHANCE] || {}
   end
 
   # The dividend per stake.
@@ -93,7 +95,7 @@ class Chance
   #
   # @return [ Object ]
   def value_of(key)
-    @data[key][:VALUE]
+    data[key][:VALUE]
   rescue
     nil
   end

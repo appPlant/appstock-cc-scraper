@@ -4,6 +4,16 @@ require 'stock'
 require 'json'
 
 class Scraper
+  FIELDS = [
+    :PerformanceV1,
+    :PriceV1,
+    :RecommendationV1,
+    :ScreenerV1,
+    :ScreenerAnalysisV1,
+    :TechnicalAnalysisV1,
+    :TradingCentralV1
+  ].freeze
+
   # Intialize the scraper.
   #
   # @example With a custom drop box location.
@@ -28,20 +38,23 @@ class Scraper
   # @example Scrape Facebook and Amazon
   #   run('US30303M1027', 'US0231351067')
   #
-  # @param [ Array<String> ] List of ISIN numbers.
+  # @param [ Array<String> ] isins List of ISIN numbers.
   #
   # @return [ Int ] Total number of scraped stocks.
-  def run(*isins)
+  def run(isins, fields: FIELDS, parallel: 200)
     return unless isins.any?
 
     FileUtils.mkdir_p @drop_box
 
-    isins.each { |isin| scrape isin }
+    @hydra.max_concurrency = [0, parallel].max
+    @counter               = 0
 
-    @hydra.run
+    isins.each_slice(500) do |subset|
+      subset.each { |isin| scrape isin, fields: fields }
+      @hydra.run
+    end
+
     @counter
-  ensure
-    @counter = 0
   end
 
   private
@@ -56,8 +69,8 @@ class Scraper
   # @param [ String ] isin The International Securities Identification Number.
   #
   # @return [ Void ]
-  def scrape(isin)
-    url = "https://www.consorsbank.de/ev/rest/de/marketdata/stocks?field=BasicV1&field=FundamentalV1&field=PerformanceV1&field=PriceV1&field=RecommendationV1&field=ScreenerV1&field=TechnicalAnalysisV1&field=TradingCentralV1&field=ScreenerAnalysisV1&id=#{isin}" # rubocop:disable Metrics/LineLength
+  def scrape(isin, fields: FIELDS)
+    url = isin.length > 12 ? isin : url_for(isin, fields)
     req = Typhoeus::Request.new(url)
 
     req.on_complete(&method(:on_complete))
@@ -76,11 +89,10 @@ class Scraper
     json  = parse_response(res)
     stock = Stock.new(json)
 
-    @hydra.add Typhoeus::Request.new(res.effective_url) if res.code == 503
     return unless stock.available?
 
+    puts @counter += 1
     drop_stock(stock)
-    @counter += 1
   rescue => e
     $stderr.puts "#{res.effective_url}\n#{e.message}"
   end
@@ -117,5 +129,27 @@ class Scraper
   # @return [ String ] A filename of a JSON file.
   def filename_for(stock)
     "#{stock.isin}-#{SecureRandom.uuid}.json"
+  end
+
+  # Build url to request the content of the specified fields of the stock.
+  #
+  # @example URL to get the basic data only.
+  #   url_for 'US30303M1027'
+  #   #=> 'stocks?field=BasicV1&id=US30303M1027'
+  #
+  # @example URL to get the basic and performance data.
+  #   url_for 'US30303M1027'
+  #   #=> 'stocks?field=BasicV1&field=PerformanceV1&id=US30303M1027'
+  #
+  # @param [ String ] isin ISIN number of the specified stock.
+  # @param [ Array<Symbol> ] Subset of Scraper::FIELDS.
+  #
+  # @return [ String]
+  def url_for(isin, fields = [])
+    url = 'https://www.consorsbank.de/ev/rest/de/marketdata/stocks?field=BasicV1'
+
+    fields.each { |field| url << "&field=#{field}" }
+
+    "#{url}&id=#{isin}"
   end
 end

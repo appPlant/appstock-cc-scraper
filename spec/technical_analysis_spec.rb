@@ -5,6 +5,10 @@ RSpec.describe TechnicalAnalysis do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
     let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
 
+    describe '#available?' do
+      it { expect(stock.available?).to be_truthy }
+    end
+
     describe '#macd' do
       it { expect(stock.macd).to eq(1) }
     end
@@ -36,6 +40,10 @@ RSpec.describe TechnicalAnalysis do
 
   context 'when TechnicalAnalysisV1 is missing' do
     let(:json) { {} }
+
+    describe '#available?' do
+      it { expect(stock.available?).to be_falsy }
+    end
 
     describe '#macd' do
       it { expect { stock.macd }.to_not raise_error }

@@ -5,6 +5,10 @@ RSpec.describe Chance do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
     let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
 
+    describe '#available?' do
+      it { expect(stock.available?).to be_truthy }
+    end
+
     describe '#dividend' do
       it { expect(stock.dividend).to eq(0) }
     end
@@ -52,6 +56,10 @@ RSpec.describe Chance do
 
   context 'when ScreenerAnalysisV1 is missing' do
     let(:json) { {} }
+
+    describe '#available?' do
+      it { expect(stock.available?).to be_falsy }
+    end
 
     describe '#dividend' do
       it { expect { stock.dividend }.to_not raise_error }
