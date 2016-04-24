@@ -4,6 +4,7 @@ require 'stock'
 require 'json'
 
 class Scraper
+
   FIELDS = [
     :PerformanceV1,
     :PriceV1,
@@ -148,7 +149,7 @@ class Scraper
   def url_for(isin, fields = [])
     url = 'https://www.consorsbank.de/ev/rest/de/marketdata/stocks?field=BasicV1'
 
-    fields.each { |field| url << "&field=#{field}" }
+    fields.each { |field| url << "&field=#{field}" if FIELDS.include? field }
 
     "#{url}&id=#{isin}"
   end
