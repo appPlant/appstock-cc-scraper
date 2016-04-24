@@ -4,9 +4,13 @@
 .gitignore
 .travis.yml
 .rubocop.yml
+.codeclimate.yml
+.DS_Store
 bin
 coverage
 *.md
 !LICENSE.md
 vendor
 spec
+tmp
+!tmp/isins.txt
