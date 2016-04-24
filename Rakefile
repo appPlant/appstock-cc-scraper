@@ -27,7 +27,7 @@ namespace :scrape do
 
   desc 'Run Stock-Scraper to collect intraday stats from consorsbank.de'
   task :intra do
-    task('scraper:run').invoke(200, 'PriveV1')
+    task('scraper:run').invoke(200, 'PriceV1')
   end
 end
 
