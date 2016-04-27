@@ -7,18 +7,18 @@ services:
 
 rvm:
   - 2.2
-  - 2.3.0
 matrix:
-  allow_failures:
-    - rvm: 2.3.0
   fast_finish: true
 
 before_install:
   - bundle install
-bundler_args: --without documentation development production
+bundler_args: --without development
 cache: bundler
 
 script:
   - bundle exec rake
-  - ./bin/build
+  - docker build -t appdax/cc-scraper:edge .
   - docker ps -a
+  - docker images --filter "dangling=false"
+  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker push appdax/cc-scraper
