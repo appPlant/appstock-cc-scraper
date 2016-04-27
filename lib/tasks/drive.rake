@@ -41,7 +41,7 @@ def create_archive
   successful = system [
     "cd tmp && find . -name '*.json'",
     'cut -c 3-',
-    'tar cfvz stocks.tar.gz --files-from -'
+    'tar cfvz stocks.tar.gz --files-from - &>/dev/null'
   ].join('|')
 
   $stderr.puts 'Could not create the archive' unless successful
