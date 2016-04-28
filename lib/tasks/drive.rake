@@ -5,12 +5,14 @@ namespace :drive do
   task(:download) { download_list }
 
   desc 'Upload archive to external drive'
-  task(upload: [:tar]) { upload_archive }
+  task(upload: [:tar, :cleanup]) { upload_archive }
 
   desc 'Check accessibility of external drive'
   task(:check) { drive && puts('OK') }
 
   task(:tar) { create_archive }
+
+  task(:cleanup) { rm_rf 'tmp/stocks' }
 end
 
 private
@@ -39,12 +41,12 @@ end
 # Create a tar of all scraped stock data.
 def create_archive
   successful = system [
-    "cd tmp && find . -name '*.json'",
+    "cd tmp/stocks && find . -name '*.json'",
     'cut -c 3-',
-    'tar cfvz stocks.tar.gz --files-from - &>/dev/null'
+    'tar cfvz ../stocks.tar.gz --files-from - &>/dev/null'
   ].join('|')
 
-  $stderr.puts 'Could not create the archive' unless successful
+  raise 'Could not create the archive' unless successful
 end
 
 # Dropbox client instance.
