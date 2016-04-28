@@ -23,7 +23,7 @@ class Scraper
   # @param [ String ] drop_box: The folder where to place the stock data.
   #
   # @return [ Fetcher ] A new scraper instance.
-  def initialize(drop_box:)
+  def initialize(drop_box: 'tmp/stocks')
     @drop_box = drop_box
     @hydra    = Typhoeus::Hydra.new
     @counter  = 0
