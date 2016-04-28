@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cd $APP_HOME && \
+bundle exec rake drive:download && \
+bundle exec rake scrape:stocks && \
+bundle exec rake drive:upload
