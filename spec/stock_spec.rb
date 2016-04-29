@@ -58,14 +58,6 @@ RSpec.describe Stock do
     end
   end
 
-  describe '#to_json' do
-    subject { stock.to_json }
-    it { is_expected.to be_a(String) }
-    it('should be valid JSON') do
-      expect { JSON.parse(subject) }.to_not raise_error
-    end
-  end
-
   describe '#inspect' do
     it { expect(stock.inspect).to match(stock.name) }
   end

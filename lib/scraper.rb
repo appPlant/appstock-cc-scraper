@@ -2,7 +2,18 @@ require 'securerandom'
 require 'typhoeus'
 require 'stock'
 require 'json'
+require 'serializer/json'
 
+# To scrape all data about a stock from consorsbank.de the Scraper class takes
+# a list of of ISIN numbers and a set of fields to scrape for. Once a stock been
+# scraped the date gets serialed to JSON string and written down into a file.
+#
+# @example Scrape intraday data for facebook stock.
+#   Scraper.new.run ['US30303M1027'], fields: :PriceV1
+#
+# @example Scrape all data for facebook stock.
+#   Scraper.new.run ['US30303M1027']
+#
 class Scraper
   # List of valid fields for API v1
   FIELDS = [
@@ -24,9 +35,10 @@ class Scraper
   #
   # @return [ Fetcher ] A new scraper instance.
   def initialize(drop_box: 'tmp/stocks')
-    @drop_box = drop_box
-    @hydra    = Typhoeus::Hydra.new
-    @counter  = 0
+    @drop_box   = drop_box
+    @hydra      = Typhoeus::Hydra.new
+    @serializer = Serializer::JSON.new
+    @counter    = 0
   end
 
   attr_reader :drop_box
@@ -118,7 +130,7 @@ class Scraper
   def drop_stock(stock)
     filepath = File.join(@drop_box, filename_for(stock))
 
-    File.open(filepath, 'w+') { |io| io << stock.to_json }
+    File.open(filepath, 'w+') { |io| io << @serializer.serialize(stock) }
   end
 
   # Generate a filename for a stock.
