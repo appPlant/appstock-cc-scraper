@@ -1,6 +1,9 @@
 FROM alpine:3.3
 MAINTAINER Sebastian Katzer "katzer@appplant.de"
 
+ENV PARALLEL_STOCKS 35
+ENV PARALLEL_INTRA 200
+ENV APP_HOME /usr/app/
 ENV BUILD_PACKAGES ruby-dev libffi-dev gcc make libc-dev tzdata
 ENV RUBY_PACKAGES ruby tar curl ruby-json ruby-bundler ruby-io-console
 
@@ -12,7 +15,6 @@ RUN apk update && \
 RUN cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 RUN echo "Europe/Berlin" >  /etc/timezone
 
-ENV APP_HOME /usr/app/
 RUN mkdir $APP_HOME
 RUN mkdir $APP_HOME/log
 WORKDIR $APP_HOME
