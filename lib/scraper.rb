@@ -53,19 +53,20 @@ class Scraper
   #
   # @param [ Array<String> ] isins List of ISIN numbers.
   # @param [ Array<Symbol> ] fields Subset of Scraper::FIELDS.
-  # @param [ Int ] parallel Max number of parallel requests.
+  # @param [ Int ] concurrent Max number of concurrent requests.
+  # @param [ Int ] parallel Max number of stocks per request.
   #
   # @return [ Int ] Total number of scraped stocks.
-  def run(isins, fields: FIELDS, parallel: 200)
+  def run(isins, fields: FIELDS, concurrent: 200, parallel: 1)
     FileUtils.mkdir_p @drop_box
 
     return if isins.empty?
 
-    @hydra.max_concurrency = [0, parallel].max
+    @hydra.max_concurrency = [0, concurrent].max
     @counter               = 0
 
-    isins.take(50).each_slice(500) do |subset|
-      subset.each { |isin| scrape isin, fields: fields }
+    isins.each_slice(500) do |subset|
+      subset.each_slice(parallel) { |stocks| scrape stocks, fields: fields }
       @hydra.run
     end
 
@@ -81,11 +82,11 @@ class Scraper
   # @example Scrape Facebook Inc.
   #   scrape('US30303M1027')
   #
-  # @param [ String ] isin The International Securities Identification Number.
+  # @param [ Array<String> ] isins Set of ISIN numbers.
   #
   # @return [ Void ]
-  def scrape(isin, fields: FIELDS)
-    url = isin.length > 12 ? isin : url_for(isin, fields)
+  def scrape(isins, fields: FIELDS)
+    url = url_for(isins, fields)
     req = Typhoeus::Request.new(url)
 
     req.on_complete(&method(:on_complete))
@@ -101,13 +102,16 @@ class Scraper
   #
   # @return [ Void ]
   def on_complete(res)
-    json  = parse_response(res)
-    stock = Stock.new(json)
+    data = parse_response(res)
 
-    return unless stock.available?
+    data.each do |json|
+      stock = Stock.new(json)
 
-    drop_stock(stock)
-    @counter += 1
+      next unless stock.available?
+
+      drop_stock(stock)
+      @counter += 1
+    end
   end
 
   # Parses the response body to ruby object.
@@ -116,12 +120,10 @@ class Scraper
   #
   # @return [ Object ] The parsed ruby object.
   def parse_response(res)
-    return nil unless res.success?
-    json = JSON.parse(res.body, symbolize_names: true)
-    json = json[0] if json.is_a? Array
-    json
+    return [] unless res.success?
+    JSON.parse(res.body, symbolize_names: true)
   rescue JSON::ParserError
-    nil
+    []
   end
 
   # Save the scraped stock data in a file under @drop_box dir.
@@ -156,15 +158,15 @@ class Scraper
   #   url_for 'US30303M1027'
   #   #=> 'stocks?field=BasicV1&field=PerformanceV1&id=US30303M1027'
   #
-  # @param [ String ] isin ISIN number of the specified stock.
-  # @param [ Array<Symbol> ] Subset of Scraper::FIELDS.
+  # @param [ Array<String> ] isins The ISIN numbers of the specified stock.
+  # @param [ Array<Symbol> ] fields A subset of Scraper::FIELDS.
   #
   # @return [ String]
-  def url_for(isin, fields = [])
+  def url_for(isins, fields = [])
     url = 'https://www.consorsbank.de/ev/rest/de/marketdata/stocks?field=BasicV1'
 
     fields.each { |field| url << "&field=#{field}" if FIELDS.include? field }
 
-    "#{url}&id=#{isin}"
+    isins.each_with_object(url) { |isin, uri| uri << "&id=#{isin}" }
   end
 end

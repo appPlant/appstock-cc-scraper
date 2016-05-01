@@ -1,9 +1,8 @@
 FROM alpine:3.3
 MAINTAINER Sebastian Katzer "katzer@appplant.de"
 
-ENV STOCKS_CONCURRENT 35
-ENV INTRA_CONCURRENT 200
 ENV APP_HOME /usr/app/
+
 ENV BUILD_PACKAGES ruby-dev libffi-dev gcc make libc-dev tzdata
 ENV RUBY_PACKAGES ruby tar curl ruby-json ruby-bundler ruby-io-console
 
@@ -39,5 +38,10 @@ RUN chmod -R +x $APP_HOME/init
 
 COPY scripts/ /etc/periodic/
 RUN chmod -R +x /etc/periodic/
+
+ENV STOCKS_CONCURRENT 35
+ENV STOCKS_PARALLEL 1
+ENV INTRA_CONCURRENT 200
+ENV INTRA_PARALLEL 20
 
 CMD ["./init"]
