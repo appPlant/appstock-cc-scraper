@@ -16,4 +16,28 @@ class Partial
   def available?
     @data && @data.any?
   end
+
+  # Call method equal to key and return the value.
+  #
+  # @param [Symbol] Method name.
+  #
+  # @return [ Object ]
+  def [](key)
+    public_send key
+  rescue
+    nil
+  end
+
+  private
+
+  # Find the value for the given key.
+  #
+  # @param [ Symbol ] key
+  #
+  # @return [ Object ]
+  def value_of(key)
+    @data[key][:VALUE]
+  rescue
+    nil
+  end
 end

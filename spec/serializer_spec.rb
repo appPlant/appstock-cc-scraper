@@ -1,4 +1,4 @@
-RSpec.describe Serializer::JSON do
+RSpec.describe Serializer do
   let(:stock) { Stock.new(json) }
   let(:serializer) { described_class.new }
   subject { serializer.serialize(stock) }

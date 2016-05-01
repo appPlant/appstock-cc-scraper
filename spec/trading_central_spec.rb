@@ -13,22 +13,22 @@ RSpec.describe TradingCentral do
       it { expect(stock.pivot).to eq(103.9) }
     end
 
-    describe '#support_levels' do
-      it { expect(stock.support_levels).to eq([103.9, 96.7, 89.3]) }
+    describe '#supports' do
+      it { expect(stock.supports).to eq([103.9, 96.7, 89.3]) }
     end
 
-    describe '#resistance_levels' do
-      it { expect(stock.resistance_levels).to eq([117.6, 125, 131]) }
+    describe '#resistors' do
+      it { expect(stock.resistors).to eq([117.6, 125, 131]) }
     end
 
-    describe '#short_term_potential' do
-      let(:potential) { stock.short_term_potential }
+    describe '#short_term' do
+      let(:potential) { stock.short_term }
       describe(':delta') { it { expect(potential[:delta]).to eq(0) } }
       describe(':opinion') { it { expect(potential[:opinion]).to eq(2) } }
     end
 
-    describe '#medium_term_potential' do
-      let(:potential) { stock.medium_term_potential }
+    describe '#medium_term' do
+      let(:potential) { stock.medium_term }
       describe(':delta') { it { expect(potential[:delta]).to eq(0) } }
       describe(':opinion') { it { expect(potential[:opinion]).to eq(1) } }
     end
@@ -50,24 +50,24 @@ RSpec.describe TradingCentral do
       it { expect(stock.pivot).to be_nil }
     end
 
-    describe '#support_levels' do
-      it { expect { stock.support_levels }.to_not raise_error }
-      it { expect(stock.support_levels).to eq([nil, nil, nil]) }
+    describe '#supports' do
+      it { expect { stock.supports }.to_not raise_error }
+      it { expect(stock.supports).to eq([nil, nil, nil]) }
     end
 
-    describe '#resistance_levels' do
-      it { expect { stock.resistance_levels }.to_not raise_error }
-      it { expect(stock.resistance_levels).to eq([nil, nil, nil]) }
+    describe '#resistors' do
+      it { expect { stock.resistors }.to_not raise_error }
+      it { expect(stock.resistors).to eq([nil, nil, nil]) }
     end
 
-    describe '#short_term_potential' do
-      it { expect { stock.short_term_potential }.to_not raise_error }
-      it { expect(stock.short_term_potential).to eq(delta: nil, opinion: nil) }
+    describe '#short_term' do
+      it { expect { stock.short_term }.to_not raise_error }
+      it { expect(stock.short_term).to eq(delta: nil, opinion: nil) }
     end
 
-    describe '#medium_term_potential' do
-      it { expect { stock.medium_term_potential }.to_not raise_error }
-      it { expect(stock.medium_term_potential).to eq(delta: nil, opinion: nil) }
+    describe '#medium_term' do
+      it { expect { stock.medium_term }.to_not raise_error }
+      it { expect(stock.medium_term).to eq(delta: nil, opinion: nil) }
     end
 
     describe '#updated_at' do

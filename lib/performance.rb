@@ -7,7 +7,10 @@ class Performance < Partial
   # @param [ Hash ] raw The serialized raw data from BNP Paribas.
   def initialize(data)
     super data[:PerformanceV1] || {}
+    @updated_at = Time.now
   end
+
+  attr_reader :updated_at
 
   # The performance of the specified time period.
   #

@@ -1,5 +1,5 @@
 RSpec.describe Chance do
-  let(:stock) { described_class.new(json) }
+  let(:stock) { Chance.new(json) }
 
   context 'when ScreenerAnalysisV1 is present' do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
@@ -13,36 +13,31 @@ RSpec.describe Chance do
       it { expect(stock.dividend).to eq(0) }
     end
 
-    describe '#earnings_revision' do
-      it { expect(stock.earnings_revision).to eq(-14) }
+    describe '#earnings' do
+      let(:earnings) { stock.earnings }
+      describe(:revision) { it { expect(earnings[:revision]).to eq(-14) } }
+      describe(:trend) { it { expect(earnings[:trend]).to eq(-1) } }
+      describe(:growth) { it { expect(earnings[:growth]).to eq(31.89) } }
     end
 
-    describe '#earnings_trend' do
-      it { expect(stock.earnings_trend).to eq(-1) }
+    describe '#per' do
+      it { expect(stock.per).to eq(27.04) }
     end
 
-    describe '#long_term_potential' do
-      it { expect(stock.long_term_potential).to eq(31.89) }
-    end
-
-    describe '#long_term_per' do
-      it { expect(stock.long_term_per).to eq(27.04) }
-    end
-
-    describe '#medium_term_technical_trend' do
-      it { expect(stock.medium_term_technical_trend).to eq(1) }
+    describe '#trend' do
+      it { expect(stock.trend).to eq(1) }
     end
 
     describe '#analysts' do
       it { expect(stock.analysts).to eq(46) }
     end
 
-    describe '#relative_performance' do
-      it { expect(stock.relative_performance).to eq(-1.75) }
+    describe '#outperformanceerformance' do
+      it { expect(stock.outperformance).to eq(-1.75) }
     end
 
-    describe '#technical_reverse_price' do
-      it { expect(stock.technical_reverse_price).to eq(112.02) }
+    describe '#reverse_price' do
+      it { expect(stock.reverse_price).to eq(112.02) }
     end
 
     describe '#currency' do
@@ -51,6 +46,10 @@ RSpec.describe Chance do
 
     describe '#rating' do
       it { expect(stock.rating).to eq(1) }
+    end
+
+    describe '#updated_at' do
+      it { expect(stock.updated_at).to eq('2016-04-18T22:00:00+0000') }
     end
   end
 
@@ -66,29 +65,19 @@ RSpec.describe Chance do
       it { expect(stock.dividend).to be_nil }
     end
 
-    describe '#earnings_revision' do
-      it { expect { stock.earnings_revision }.to_not raise_error }
-      it { expect(stock.earnings_revision).to be_nil }
+    describe '#earnings' do
+      it { expect { stock.earnings }.to_not raise_error }
+      it { expect(stock.earnings.values.compact).to be_empty }
     end
 
-    describe '#earnings_trend' do
-      it { expect { stock.earnings_trend }.to_not raise_error }
-      it { expect(stock.earnings_trend).to be_nil }
+    describe '#per' do
+      it { expect { stock.per }.to_not raise_error }
+      it { expect(stock.per).to be_nil }
     end
 
-    describe '#long_term_potential' do
-      it { expect { stock.long_term_potential }.to_not raise_error }
-      it { expect(stock.long_term_potential).to be_nil }
-    end
-
-    describe '#long_term_per' do
-      it { expect { stock.long_term_per }.to_not raise_error }
-      it { expect(stock.long_term_per).to be_nil }
-    end
-
-    describe '#medium_term_technical_trend' do
-      it { expect { stock.medium_term_technical_trend }.to_not raise_error }
-      it { expect(stock.medium_term_technical_trend).to be_nil }
+    describe '#trend' do
+      it { expect { stock.trend }.to_not raise_error }
+      it { expect(stock.trend).to be_nil }
     end
 
     describe '#analysts' do
@@ -96,14 +85,14 @@ RSpec.describe Chance do
       it { expect(stock.analysts).to be_nil }
     end
 
-    describe '#relative_performance' do
-      it { expect { stock.relative_performance }.to_not raise_error }
-      it { expect(stock.relative_performance).to be_nil }
+    describe '#outperformance' do
+      it { expect { stock.outperformance }.to_not raise_error }
+      it { expect(stock.outperformance).to be_nil }
     end
 
-    describe '#technical_reverse_price' do
-      it { expect { stock.technical_reverse_price }.to_not raise_error }
-      it { expect(stock.technical_reverse_price).to be_nil }
+    describe '#reverse_price' do
+      it { expect { stock.reverse_price }.to_not raise_error }
+      it { expect(stock.reverse_price).to be_nil }
     end
 
     describe '#currency' do
@@ -114,6 +103,11 @@ RSpec.describe Chance do
     describe '#rating' do
       it { expect { stock.rating }.to_not raise_error }
       it { expect(stock.rating).to be_nil }
+    end
+
+    describe '#updated_at' do
+      it { expect { stock.updated_at }.to_not raise_error }
+      it { expect(stock.updated_at).to be_nil }
     end
   end
 end

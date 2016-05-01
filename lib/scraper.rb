@@ -2,7 +2,7 @@ require 'securerandom'
 require 'typhoeus'
 require 'stock'
 require 'json'
-require 'serializer/json'
+require 'serializer'
 
 # To scrape all data about a stock from consorsbank.de the Scraper class takes
 # a list of of ISIN numbers and a set of fields to scrape for. Once a stock been
@@ -37,7 +37,7 @@ class Scraper
   def initialize(drop_box: 'tmp/stocks')
     @drop_box   = drop_box
     @hydra      = Typhoeus::Hydra.new
-    @serializer = Serializer::JSON.new
+    @serializer = Serializer.new
     @counter    = 0
   end
 
@@ -64,7 +64,7 @@ class Scraper
     @hydra.max_concurrency = [0, parallel].max
     @counter               = 0
 
-    isins.each_slice(500) do |subset|
+    isins.take(5).each_slice(500) do |subset|
       subset.each { |isin| scrape isin, fields: fields }
       @hydra.run
     end

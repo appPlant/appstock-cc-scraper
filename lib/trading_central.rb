@@ -19,28 +19,28 @@ class TradingCentral < Partial
   # The support values where to buy in.
   #
   # @return [ Array<Float> ]
-  def support_levels
+  def supports
     [data[:SUPPORT_1], data[:SUPPORT_2], data[:SUPPORT_3]]
   end
 
   # The resistance values where to be notified.
   #
   # @return [ Array<Float> ]
-  def resistance_levels
+  def resistors
     [data[:RESISTANCE_1], data[:RESISTANCE_2], data[:RESISTANCE_3]]
   end
 
   # The short term potential (2-4 weeks).
   #
   # @return [ Hash ] { delta:Int opinion:Int }
-  def short_term_potential
+  def short_term
     { delta: data[:DELTA_SHORTTERM], opinion: data[:OPINION_SHORTTERM] }
   end
 
   # The medium term potential (3-6 months).
   #
   # @return [ Hash ] { delta:Int opinion:Int }
-  def medium_term_potential
+  def medium_term
     { delta: data[:DELTA_MEDIUMTERM], opinion: data[:OPINION_MEDIUMTERM] }
   end
 

@@ -17,38 +17,27 @@ class Chance < Partial
     value_of :DIVIDEND
   end
 
-  # Difference of earning expectations in the last 7 weeks in %.
+  # The earning revision and expectation.
   #
-  # @return [ Float ]
-  def earnings_revision
-    value_of :EARINGS_REVISION
-  end
-
-  # The trend of the earning revisions in the last 7 weeks in %.
-  #
-  # @return [ Int ] A positive number indicates a positive market mood.
-  def earnings_trend
-    value_of :EARINGS_REVISION_TREND
-  end
-
-  # The growth potential till the end of next year.
-  #
-  # @return [ Float ]
-  def long_term_potential
-    value_of :LONGTERM_GROWTH
+  # @return [ Hash ] { revision: x, trend: y, growth: z }
+  def earnings
+    { revision: earnings_revision,
+      trend: earnings_trend,
+      growth: long_term_earnings_growth
+    }
   end
 
   # The earnings grows potential till the end of next year.
   #
   # @return [ Float ]
-  def long_term_per
+  def per
     value_of :LONG_TERM_PRICE_EARING
   end
 
   # The midterm technical 40-days trend.
   #
   # @return [ Int ] A value between -1 and 1.
-  def medium_term_technical_trend
+  def trend
     value_of :MEDIUM_TERM_TECHNICAL_TREND
   end
 
@@ -62,14 +51,14 @@ class Chance < Partial
   # The relative performance compared to its benchmark in last 4 weeks in %.
   #
   # @return [ Float ]
-  def relative_performance
+  def outperformance
     value_of :RELATIVE_PERFORMANCE_W4
   end
 
   # The technical reverse point.
   #
   # @return [ Float ]
-  def technical_reverse_price
+  def reverse_price
     value_of :TECHNICAL_REVERSE
   end
 
@@ -87,7 +76,35 @@ class Chance < Partial
     @base[:ISO_CURRENCY]
   end
 
+  # The date from the last update.
+  #
+  # @return [ String ] A string in ISO representation.
+  def updated_at
+    @base[:DATETIME_ANALYSIS]
+  end
+
   private
+
+  # Difference of earning expectations in the last 7 weeks in %.
+  #
+  # @return [ Float ]
+  def earnings_revision
+    value_of :EARINGS_REVISION
+  end
+
+  # The trend of the earning revisions in the last 7 weeks in %.
+  #
+  # @return [ Int ] A positive number indicates a positive market mood.
+  def earnings_trend
+    value_of :EARINGS_REVISION_TREND
+  end
+
+  # The growth potential till the end of next year.
+  #
+  # @return [ Float ]
+  def long_term_earnings_growth
+    value_of :LONGTERM_GROWTH
+  end
 
   # Find the value for the given key.
   #

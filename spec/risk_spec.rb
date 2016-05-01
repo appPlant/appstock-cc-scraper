@@ -9,12 +9,12 @@ RSpec.describe Risk do
       it { expect(stock.available?).to be_truthy }
     end
 
-    describe '#bad_news_factor' do
-      it { expect(stock.bad_news_factor).to eq(147) }
+    describe '#bad_news' do
+      it { expect(stock.bad_news).to eq(147) }
     end
 
-    describe '#bear_market_factor' do
-      it { expect(stock.bear_market_factor).to eq(-2) }
+    describe '#bear_market' do
+      it { expect(stock.bear_market).to eq(-2) }
     end
 
     describe '#beta' do
@@ -29,10 +29,6 @@ RSpec.describe Risk do
     describe '#correlation' do
       it { expect(stock.correlation).to eq(0.7) }
     end
-
-    describe '#capitalization' do
-      it { expect(stock.capitalization).to eq(319.61) }
-    end
   end
 
   context 'when ScreenerAnalysisV1 is missing' do
@@ -42,14 +38,14 @@ RSpec.describe Risk do
       it { expect(stock.available?).to be_falsy }
     end
 
-    describe '#bad_news_factor' do
-      it { expect { stock.bad_news_factor }.to_not raise_error }
-      it { expect(stock.bad_news_factor).to be_nil }
+    describe '#bad_news' do
+      it { expect { stock.bad_news }.to_not raise_error }
+      it { expect(stock.bad_news).to be_nil }
     end
 
-    describe '#bear_market_factor' do
-      it { expect { stock.bear_market_factor }.to_not raise_error }
-      it { expect(stock.bear_market_factor).to be_nil }
+    describe '#bear_market' do
+      it { expect { stock.bear_market }.to_not raise_error }
+      it { expect(stock.bear_market).to be_nil }
     end
 
     describe '#beta' do
@@ -73,11 +69,6 @@ RSpec.describe Risk do
     describe '#correlation' do
       it { expect { stock.correlation }.to_not raise_error }
       it { expect(stock.correlation).to be_nil }
-    end
-
-    describe '#capitalization' do
-      it { expect { stock.capitalization }.to_not raise_error }
-      it { expect(stock.capitalization).to be_nil }
     end
   end
 end

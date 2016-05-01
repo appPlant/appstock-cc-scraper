@@ -6,20 +6,21 @@ class Risk < Partial
   #
   # @param [ Hash ] raw The serialized raw data from BNP Paribas.
   def initialize(data)
-    super data.fetch(:ScreenerAnalysisV1, {})[:RISK] || {}
+    @base = data[:ScreenerAnalysisV1] || {}
+    super @base[:RISK] || {}
   end
 
   # The value of the bad-news-factor.
   #
   # @return [ Int ]
-  def bad_news_factor
+  def bad_news
     value_of :BAD_NEWS_FACTOR
   end
 
   # The value of the bear-market-factor.
   #
   # @return [ Int ]
-  def bear_market_factor
+  def bear_market
     value_of :BEAR_MARKET_FACTOR
   end
 
@@ -53,11 +54,11 @@ class Risk < Partial
     value_of :CORRELATION
   end
 
-  # The market capitalization in billion dollar.
+  # The date from the last update.
   #
-  # @return [ Float ]
-  def capitalization
-    value_of :MARKET_CAPITALIZATION
+  # @return [ String ] A string in ISO representation.
+  def updated_at
+    @base[:DATETIME_ANALYSIS]
   end
 
   private
