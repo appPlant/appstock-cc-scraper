@@ -1,7 +1,7 @@
-require 'partial'
+require_relative 'partial'
 
 # Informations about the price of a stock.
-class IntraDay < Partial
+class IntraDayPartial < Partial
   # Initializer of the class.
   #
   # @param [ Hash ] raw The serialized raw data from BNP Paribas.

@@ -1,5 +1,5 @@
-RSpec.describe Chance do
-  let(:stock) { Chance.new(json) }
+RSpec.describe ChancePartial do
+  let(:stock) { ChancePartial.new(json) }
 
   context 'when ScreenerAnalysisV1 is present' do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }

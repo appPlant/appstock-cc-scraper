@@ -1,9 +1,9 @@
-require 'partial'
+require_relative 'partial'
 
 # That class can be used to get informations about recommendations of a stock.
 # Such informations include the target price, the upside potential or the
 # recent disposition.
-class Recommendations < Partial
+class RecommendationPartial < Partial
   # List of rating types
   RATING_TYPES = [:buy, :overweight, :hold, :underweight, :sell].freeze
 

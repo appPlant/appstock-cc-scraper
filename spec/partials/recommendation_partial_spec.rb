@@ -1,4 +1,4 @@
-RSpec.describe Recommendations do
+RSpec.describe RecommendationPartial do
   let(:stock) { described_class.new(json) }
 
   context 'when RecommendationV1 is present' do

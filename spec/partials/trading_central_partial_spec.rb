@@ -1,4 +1,4 @@
-RSpec.describe TradingCentral do
+RSpec.describe TradingCentralPartial do
   let(:stock) { described_class.new(json) }
 
   context 'when TradingCentralV1 is present' do

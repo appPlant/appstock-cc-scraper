@@ -11,35 +11,35 @@ RSpec.describe Stock do
   end
 
   describe '#screener' do
-    it { expect(stock.screener).to be_a(Screener) }
+    it { expect(stock.screener).to be_a(ScreenerPartial) }
   end
 
   describe '#recommendations' do
-    it { expect(stock.recommendations).to be_a(Recommendations) }
+    it { expect(stock.recommendations).to be_a(RecommendationPartial) }
   end
 
   describe '#performance' do
-    it { expect(stock.performance).to be_a(Performance) }
+    it { expect(stock.performance).to be_a(PerformancePartial) }
   end
 
   describe '#intra' do
-    it { expect(stock.intra).to be_a(IntraDay) }
+    it { expect(stock.intra).to be_a(IntraDayPartial) }
   end
 
   describe '#technical_analysis' do
-    it { expect(stock.technical_analysis).to be_a(TechnicalAnalysis) }
+    it { expect(stock.technical_analysis).to be_a(TechnicalAnalysisPartial) }
   end
 
   describe '#trading_central' do
-    it { expect(stock.trading_central).to be_a(TradingCentral) }
+    it { expect(stock.trading_central).to be_a(TradingCentralPartial) }
   end
 
   describe '#risk' do
-    it { expect(stock.risk).to be_a(Risk) }
+    it { expect(stock.risk).to be_a(RiskPartial) }
   end
 
   describe '#chance' do
-    it { expect(stock.chance).to be_a(Chance) }
+    it { expect(stock.chance).to be_a(ChancePartial) }
   end
 
   describe '#available?' do

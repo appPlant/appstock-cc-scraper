@@ -1,4 +1,4 @@
-RSpec.describe IntraDay do
+RSpec.describe IntraDayPartial do
   let(:stock) { described_class.new(json) }
 
   context 'when PriceV1 is present' do

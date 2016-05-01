@@ -1,12 +1,12 @@
-require 'basic'
-require 'screener'
-require 'recommendations'
-require 'performance'
-require 'intra_day'
-require 'technical_analysis'
-require 'trading_central'
-require 'risk'
-require 'chance'
+require 'partials/basic_partial'
+require 'partials/screener_partial'
+require 'partials/recommendation_partial'
+require 'partials/performance_partial'
+require 'partials/intra_day_partial'
+require 'partials/technical_analysis_partial'
+require 'partials/trading_central_partial'
+require 'partials/risk_partial'
+require 'partials/chance_partial'
 
 # Each instance of class Stock indicates one finance security. The provided
 # informations are reaching from basic properties like name and ISIN over
@@ -27,7 +27,7 @@ require 'chance'
 #   stock.to_json
 #   #=> "{...}"
 class Stock
-  include Basic
+  include BasicPartial
 
   # Initializer. Each instance indicates one finance security.
   #
@@ -42,56 +42,56 @@ class Stock
   #
   # @return [ Screener ]
   def screener
-    @screener ||= Screener.new(@data)
+    @screener ||= ScreenerPartial.new(@data)
   end
 
   # Recommendations about the stock.
   #
   # @return [ Recommendations ]
   def recommendations
-    @recommendations ||= Recommendations.new(@data)
+    @recommendations ||= RecommendationPartial.new(@data)
   end
 
   # Performance of the stock.
   #
   # @return [ Performance ]
   def performance
-    @performance ||= Performance.new(@data)
+    @performance ||= PerformancePartial.new(@data)
   end
 
   # Price of the stock.
   #
   # @return [ IntraDay ]
   def intra
-    @intra ||= IntraDay.new(@data)
+    @intra ||= IntraDayPartial.new(@data)
   end
 
   # Technical figures of the stock.
   #
   # @return [ TechnicalAnalysis ]
   def technical_analysis
-    @technical_analysis ||= TechnicalAnalysis.new(@data)
+    @technical_analysis ||= TechnicalAnalysisPartial.new(@data)
   end
 
   # Technical figures of the stock from tradingcentral.
   #
   # @return [ TradingCentral ]
   def trading_central
-    @trading_central ||= TradingCentral.new(@data)
+    @trading_central ||= TradingCentralPartial.new(@data)
   end
 
   # Risk figures of the stock from thescreener.
   #
   # @return [ Risk ]
   def risk
-    @risk ||= Risk.new(@data)
+    @risk ||= RiskPartial.new(@data)
   end
 
   # Outlook figures of the stock from thescreener.
   #
   # @return [ Chance ]
   def chance
-    @chance ||= Chance.new(@data)
+    @chance ||= ChancePartial.new(@data)
   end
 
   # Availability of the stock on cortal consors.

@@ -1,7 +1,7 @@
-require 'partial'
+require_relative 'partial'
 
 # Informations from thescreener about the outlook of the stock.
-class Chance < Partial
+class ChancePartial < Partial
   # Initializer of the class.
   #
   # @param [ Hash ] raw The serialized raw data from BNP Paribas.

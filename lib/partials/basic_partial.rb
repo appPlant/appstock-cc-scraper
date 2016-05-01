@@ -3,7 +3,7 @@
 # the BasicV1 key map. This includes properties like ISIN or the name.
 # The module expects a `data` method which returns a symbolized hash of the raw
 # API response.
-module Basic
+module BasicPartial
   # The name of the stock.
   #
   # @return [ String ]

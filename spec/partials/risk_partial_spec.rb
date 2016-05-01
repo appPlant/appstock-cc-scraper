@@ -1,4 +1,4 @@
-RSpec.describe Risk do
+RSpec.describe RiskPartial do
   let(:stock) { described_class.new(json) }
 
   context 'when ScreenerAnalysisV1 is present' do

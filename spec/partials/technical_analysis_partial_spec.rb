@@ -1,4 +1,4 @@
-RSpec.describe TechnicalAnalysis do
+RSpec.describe TechnicalAnalysisPartial do
   let(:stock) { described_class.new(json) }
 
   context 'when TechnicalAnalysisV1 is present' do

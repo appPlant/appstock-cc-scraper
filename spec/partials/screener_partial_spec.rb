@@ -1,4 +1,4 @@
-RSpec.describe Screener do
+RSpec.describe ScreenerPartial do
   let(:stock) { described_class.new(json) }
 
   context 'when ScreenerV1 is present' do

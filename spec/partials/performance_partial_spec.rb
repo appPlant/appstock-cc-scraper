@@ -1,4 +1,4 @@
-RSpec.describe Performance do
+RSpec.describe PerformancePartial do
   let(:perf) { described_class.new(json) }
 
   context 'when PerformanceV1 is present' do

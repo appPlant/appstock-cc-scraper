@@ -1,7 +1,7 @@
-require 'partial'
+require_relative 'partial'
 
 # Informations about the technical analysis of the stock.
-class TechnicalAnalysis < Partial
+class TechnicalAnalysisPartial < Partial
   # Initializer of the class.
   #
   # @param [ Hash ] raw The serialized raw data from BNP Paribas.

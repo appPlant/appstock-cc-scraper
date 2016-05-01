@@ -1,5 +1,5 @@
-RSpec.describe Stock do
-  let(:stock) { described_class.new(json) }
+RSpec.describe BasicPartial do
+  let(:stock) { Stock.new(json) }
 
   context 'when BasicV1 is present' do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
