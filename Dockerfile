@@ -1,8 +1,8 @@
 FROM alpine:3.3
 MAINTAINER Sebastian Katzer "katzer@appplant.de"
 
-ENV PARALLEL_STOCKS 35
-ENV PARALLEL_INTRA 200
+ENV STOCKS_CONCURRENT 35
+ENV INTRA_CONCURRENT 200
 ENV APP_HOME /usr/app/
 ENV BUILD_PACKAGES ruby-dev libffi-dev gcc make libc-dev tzdata
 ENV RUBY_PACKAGES ruby tar curl ruby-json ruby-bundler ruby-io-console

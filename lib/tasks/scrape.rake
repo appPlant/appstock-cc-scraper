@@ -4,12 +4,12 @@ require 'scraper'
 namespace :scrape do
   desc 'Scrape all data from consorsbank.de'
   task :stocks do
-    task('scraper:run').invoke ENV.fetch('PARALLEL_STOCKS', 35)
+    task('scraper:run').invoke ENV.fetch('STOCKS_CONCURRENT', 35)
   end
 
   desc 'Scrape intraday stats from consorsbank.de'
   task :intra do
-    task('scraper:run').invoke ENV.fetch('PARALLEL_INTRA', 200), 'PriceV1'
+    task('scraper:run').invoke ENV.fetch('INTRA_CONCURRENT', 200), 'PriceV1'
   end
 end
 
