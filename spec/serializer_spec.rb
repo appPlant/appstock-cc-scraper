@@ -20,4 +20,16 @@ RSpec.describe Serializer do
       it { expect(JSON.parse(subject)).to be_empty }
     end
   end
+
+  context 'when PerformanceV1 is missing' do
+    let(:raw) { IO.read('spec/fixtures/facebook.json') }
+    let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
+
+    before { json.delete :PerformanceV1 }
+
+    describe 'serialized stock' do
+      let(:analyses) { JSON.parse(subject)['analyses'] }
+      it('should not include performance') { expect(analyses.count).to eq(4) }
+    end
+  end
 end
