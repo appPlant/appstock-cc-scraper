@@ -5,6 +5,8 @@ require_relative 'feed'
 class FactSetFeed < Feed
   source :factset
 
+  timestamp recommendations: :updated_at
+
   kpis_from recommendations: %i(upgrades downgrades consensus target_price)
   kpis_from recommendations: %i(count expected_performance recent last_quarter)
 end

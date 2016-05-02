@@ -22,7 +22,7 @@ class Feed
 
     return nil if kpis.empty?
 
-    { source: self.class.source, kpis: kpis }
+    { source: self.class.source, timestamp: timestamp(stock), kpis: kpis }
   end
 
   # The source of the kpis.
@@ -40,6 +40,23 @@ class Feed
   def self.source(name = nil)
     @source = name if name
     @source
+  end
+
+  # The timestamp of the feeds data.
+  #
+  # @example A partial holds the timestamp.
+  #   timestamp screener: :updated_at
+  #
+  # @example Set a custom timestamp.
+  #   timestamp -> { |stock| ... }
+  #
+  # @param [ Hash ] map A map with a single entry like partial: :method
+  # @param [ Proc ] block A codeblock to execute which returns the date.
+  #
+  # @return [ Void ]
+  def self.timestamp(map = nil, &block)
+    @timestamp = map ? map.first : block if map || block
+    @timestamp
   end
 
   # Specify the kpis to extract from the named partial.
@@ -77,18 +94,27 @@ class Feed
   #   #=> { simple: {..}, complex: {..}, timestamp: .. }
   #
   # @return [ Hash ]
-  def self.config
+  def self.kpis
     { simple: @kpis, complex: @nodes }
   end
 
-  # The configuration of the feed.
-  #
-  # @see `Feed.config` for more informations.
-  def config
-    self.class.config
-  end
-
   private
+
+  # The timestamp of the feed.
+  #
+  # @param [ Stock ]
+  #
+  # @return [ Hash ]
+  def timestamp(stock)
+    config = self.class.timestamp
+
+    case config
+    when Array
+      stock.public_send(config[0])[config[1]]
+    when Proc
+      config.call(stock)
+    end
+  end
 
   # Basic, simple and complex kpis from the stock.
   #
@@ -105,7 +131,7 @@ class Feed
   #
   # @return [ Hash ]
   def simple_kpis(stock)
-    kpis = config[:simple]
+    kpis = self.class.kpis[:simple]
 
     return {} unless kpis
 
@@ -121,7 +147,7 @@ class Feed
   #
   # @return [ Hash ]
   def complex_kpis(stock)
-    nodes = config[:complex]
+    nodes = self.class.kpis[:complex]
 
     return {} unless nodes
 

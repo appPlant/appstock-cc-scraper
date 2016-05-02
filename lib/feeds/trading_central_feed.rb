@@ -5,6 +5,8 @@ require_relative 'feed'
 class TradingCentralFeed < Feed
   source :tradingcentral
 
+  timestamp trading_central: :updated_at
+
   kpis_from trading_central: %i(pivot supports resistors short_term medium_term)
   kpis_from technical_analysis: %i(macd)
 

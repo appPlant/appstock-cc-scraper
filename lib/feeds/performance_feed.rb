@@ -4,6 +4,8 @@ require_relative 'feed'
 class PerformanceFeed < Feed
   source :tradegate
 
+  timestamp { Time.now }
+
   kpi(:'1w',  from: :performance) { of(1, :week) }
   kpi(:'4w',  from: :performance) { of(4, :weeks) }
   kpi(:'52w', from: :performance) { of(52, :weeks) }

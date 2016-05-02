@@ -5,6 +5,8 @@ require_relative 'feed'
 class TheScreenerFeed < Feed
   source :thescreener
 
+  timestamp risk: :updated_at
+
   kpis_from screener: %i(per risk interest),
             risk: %i(bad_news bear_market beta correlation),
             chance: %i(dividend earnings per trend outperformance)
