@@ -3,7 +3,7 @@ RSpec.describe Serializer do
   let(:serializer) { described_class.new }
   subject { serializer.serialize(stock).chomp }
 
-  before { Timecop.freeze(Time.local(2016, 5, 2, 21, 26, 0)) }
+  before { Timecop.freeze(Time.utc(2016, 5, 2, 21, 26, 0)) }
 
   context 'when stock has content' do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
