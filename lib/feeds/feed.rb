@@ -22,7 +22,7 @@ class Feed
 
     return nil if kpis.empty?
 
-    { source: self.class.source, timestamp: timestamp(stock), kpis: kpis }
+    metas(stock).merge!(source: self.class.source, kpis: kpis)
   end
 
   # The source of the kpis.
@@ -57,6 +57,20 @@ class Feed
   def self.timestamp(map = nil, &block)
     @timestamp = map ? map.first : block if map || block
     @timestamp
+  end
+
+  # Add meta tag to the feed.
+  #
+  # @example Set currency for some kpis.
+  #   meta(:currency) { 'EUR' }
+  #
+  # @param [ Symbol ] The name of the meta tag.
+  # @param [ Proc] block Executable piece of code.
+  #
+  # @return [ Hash ]
+  def self.meta(name = nil, &block)
+    (@meta ||= {})[name] = block if name
+    @meta
   end
 
   # Specify the kpis to extract from the named partial.
@@ -114,6 +128,20 @@ class Feed
     when Proc
       config.call(stock)
     end
+  end
+
+  # The meta tags for the stock including the timestamp.
+  #
+  # @param [ Stock ]
+  #
+  # @return [ Hash ]
+  def metas(stock)
+    nodes  = { timestamp: timestamp(stock) }
+    config = self.class.meta
+
+    config.each_pair { |name, block| nodes[name] = block.call(stock) } if config
+
+    nodes
   end
 
   # Basic, simple and complex kpis from the stock.

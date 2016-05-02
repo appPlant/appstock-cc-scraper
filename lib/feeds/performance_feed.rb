@@ -2,7 +2,7 @@ require_relative 'feed'
 
 # Feed extract informations about the historical performance of a stock.
 class PerformanceFeed < Feed
-  source :tradegate
+  source :performance
 
   timestamp { Time.now }
 
