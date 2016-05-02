@@ -65,7 +65,7 @@ class Scraper
     @hydra.max_concurrency = [0, concurrent].max
     @counter               = 0
 
-    isins.each_slice(500) do |subset|
+    isins.take(50).each_slice(500) do |subset|
       subset.each_slice(parallel) { |stocks| scrape stocks, fields: fields }
       @hydra.run
     end

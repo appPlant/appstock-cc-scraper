@@ -25,10 +25,6 @@ class Feed
     { source: self.class.source, kpis: kpis }
   end
 
-  class << self
-    attr_reader :kpis, :nodes
-  end
-
   # The source of the kpis.
   #
   # @example Set the source
@@ -74,6 +70,24 @@ class Feed
     (@nodes ||= {})[name] = [from, block]
   end
 
+  # The configuration of the feed.
+  #
+  # @example Get config of simple and complex kpis.
+  #   config
+  #   #=> { simple: {..}, complex: {..}, timestamp: .. }
+  #
+  # @return [ Hash ]
+  def self.config
+    { simple: @kpis, complex: @nodes }
+  end
+
+  # The configuration of the feed.
+  #
+  # @see `Feed.config` for more informations.
+  def config
+    self.class.config
+  end
+
   private
 
   # Basic, simple and complex kpis from the stock.
@@ -91,7 +105,7 @@ class Feed
   #
   # @return [ Hash ]
   def simple_kpis(stock)
-    kpis = self.class.kpis
+    kpis = config[:simple]
 
     return {} unless kpis
 
@@ -107,7 +121,7 @@ class Feed
   #
   # @return [ Hash ]
   def complex_kpis(stock)
-    nodes = self.class.nodes
+    nodes = config[:complex]
 
     return {} unless nodes
 
