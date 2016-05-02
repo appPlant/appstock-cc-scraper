@@ -1,15 +1,17 @@
 RSpec.describe Serializer do
   let(:stock) { Stock.new(json) }
   let(:serializer) { described_class.new }
-  subject { serializer.serialize(stock) }
+  subject { serializer.serialize(stock).chomp }
+
+  before { Timecop.freeze(Time.local(2016, 5, 2, 21, 26, 0)) }
 
   context 'when stock has content' do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
     let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
 
     describe 'serialized stock' do
-      it { is_expected.to be_a(String) }
-      it { expect(JSON.parse(subject)).to_not be_empty }
+      let(:expected) { IO.read('spec/fixtures/facebook.serialized.json').chomp }
+      it('should be equal to expected output') { is_expected.to eq(expected) }
     end
   end
 

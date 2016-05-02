@@ -1,3 +1,4 @@
+require 'timecop'
 require 'simplecov'
 require 'webmock/rspec'
 require 'codeclimate-test-reporter'
