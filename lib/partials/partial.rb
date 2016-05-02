@@ -27,17 +27,4 @@ class Partial
   rescue
     nil
   end
-
-  private
-
-  # Find the value for the given key.
-  #
-  # @param [ Symbol ] key
-  #
-  # @return [ Object ]
-  def value_of(key)
-    @data[key][:VALUE]
-  rescue
-    nil
-  end
 end
