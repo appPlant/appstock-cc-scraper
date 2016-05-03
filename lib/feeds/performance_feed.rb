@@ -6,6 +6,8 @@ class PerformanceFeed < Feed
 
   timestamp { Time.now }
 
+  meta(:currency) { |stock| stock.intra.currency }
+
   kpi(:'1w',  from: :performance) { of(1, :week) }
   kpi(:'4w',  from: :performance) { of(4, :weeks) }
   kpi(:'52w', from: :performance) { of(52, :weeks) }

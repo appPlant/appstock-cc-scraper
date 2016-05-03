@@ -7,6 +7,8 @@ class FactSetFeed < Feed
 
   timestamp recommendations: :updated_at
 
+  meta(:currency) { |stock| stock.recommendations.currency }
+
   kpis_from recommendations: %i(upgrades downgrades consensus target_price)
   kpis_from recommendations: %i(count expected_performance recent last_quarter)
 end

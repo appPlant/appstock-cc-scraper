@@ -7,6 +7,8 @@ class TradingCentralFeed < Feed
 
   timestamp trading_central: :updated_at
 
+  meta(:currency) { |stock| stock.intra.currency }
+
   kpis_from trading_central: %i(pivot supports resistors short_term medium_term)
   kpis_from technical_analysis: %i(macd)
 
