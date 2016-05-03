@@ -12,7 +12,7 @@ end
 
 group :test do
   gem 'rspec', '~> 3.4'
-  gem 'webmock', '~> 1.24'
+  gem 'webmock', '~> 2.0'
   gem 'fakefs', '~> 0.8'
   gem 'timecop', '~> 0.8'
   gem 'simplecov'
