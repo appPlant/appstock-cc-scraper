@@ -5,16 +5,18 @@ namespace :scrape do
   desc 'Scrape all data from consorsbank.de'
   task :stocks do
     task('scraper:run').invoke(
-      ENV.fetch('STOCKS_PARALLEL', 1),
-      ENV.fetch('STOCKS_CONCURRENT', 35))
+      ENV.fetch('PER_REQUEST', 1),
+      ENV.fetch('CONCURRENT_REQUESTS', 50)
+    )
   end
 
   desc 'Scrape intraday stats from consorsbank.de'
   task :intra do
     task('scraper:run').invoke(
-      ENV.fetch('INTRA_PARALLEL', 20),
-      ENV.fetch('INTRA_CONCURRENT', 200),
-      'PriceV1')
+      ENV.fetch('PER_REQUEST', 30),
+      ENV.fetch('CONCURRENT_REQUESTS', 200),
+      'PriceV1'
+    )
   end
 end
 
@@ -53,6 +55,4 @@ def run_scraper(parallel, concurrent, fields)
   end
 
   puts "Time elapsed #{time.round(2)} seconds"
-rescue StandardError => e
-  $stderr.puts "#{e.class}: #{e.message}"
 end

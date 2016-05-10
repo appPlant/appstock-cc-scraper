@@ -1,7 +1,5 @@
 #!/bin/sh
 
-if [ $(date +%R) != "00:00" ] && [ $(date +%u) -lt 6 ]; then
-    cd $APP_HOME && \
-    bundle exec rake scrape:intra && \
-    bundle exec rake drive:upload
-fi
+cd $APP_HOME && \
+bundle exec rake scrape:intra && \
+bundle exec rake drive:upload
