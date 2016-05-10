@@ -5,3 +5,9 @@
 [![Inline docs](http://inch-ci.org/github/appdax/cc-scraper.svg?branch=master)](http://inch-ci.org/github/appdax/cc-scraper)
 
 # cc-scraper
+
+This software is released under the [GPLv3 License][license].
+
+© 2016 appdax Inc. All rights reserved
+
+[license]: https://opensource.org/licenses/GPL-3.0
