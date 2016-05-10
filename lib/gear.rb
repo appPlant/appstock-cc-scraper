@@ -20,6 +20,7 @@ module Gear
         wr.puts run_hydra(subset, parallel, fields)
       else
         forks << fork { wr.puts run_hydra(subset, parallel, fields) }
+        wait_for(forks) if forks.count % 20 == 0
       end
     end
 
@@ -67,7 +68,6 @@ module Gear
   def wait_for(forks, timeout: 20)
     Timeout.timeout(timeout) { Process.waitall }
   rescue Timeout::Error
-    puts 'timeout'
     kill_forks(forks)
   end
 
