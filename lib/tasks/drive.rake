@@ -40,11 +40,7 @@ end
 
 # Create a tar of all scraped stock data.
 def create_archive
-  successful = system [
-    "cd tmp/stocks && find . -name '*.json'",
-    'cut -c 3-',
-    'tar cfvz ../stocks.tar.gz --files-from - &>/dev/null'
-  ].join('|')
+  successful = system('cd tmp && tar cfvz stocks.tar.gz stocks &>/dev/null')
 
   raise 'Could not create the archive' unless successful
 end
