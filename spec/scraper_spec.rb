@@ -24,6 +24,8 @@ RSpec.describe Scraper do
 
     let(:run) { -> { scraper.run ['US30303M1027'] } }
 
+    before { allow(scraper).to receive(:fork) { |&block| block.call.to_i } }
+
     context 'when consorsbank is offline' do
       before { stub_request(:get, %r{/rest/de/marketdata/stocks}).to_timeout }
       it { expect { run.call }.to_not raise_error }
@@ -53,6 +55,16 @@ RSpec.describe Scraper do
           expect { JSON.parse(File.read(entries.first)) }.to_not raise_error
         end
       end
+    end
+
+    context 'when it takes to long time' do
+      before do
+        stub_request(:get, %r{/rest/de/})
+        allow(Timeout).to receive(:timeout).and_raise Timeout::Error
+        allow(Process).to receive(:kill)
+      end
+
+      it('should return 0') { expect(run.call).to be(0) }
     end
   end
 end

@@ -3,6 +3,7 @@ require 'typhoeus'
 require 'stock'
 require 'json'
 require 'serializer'
+require 'gear'
 
 # To scrape all data about a stock from consorsbank.de the Scraper class takes
 # a list of of ISIN numbers and a set of fields to scrape for. Once a stock been
@@ -26,6 +27,8 @@ class Scraper
     :TradingCentralV1
   ].freeze
 
+  include Gear
+
   # Intialize the scraper.
   #
   # @example With a custom drop box location.
@@ -38,7 +41,6 @@ class Scraper
     @drop_box   = drop_box
     @hydra      = Typhoeus::Hydra.new
     @serializer = Serializer.new
-    @counter    = 0
   end
 
   attr_reader :drop_box
@@ -60,17 +62,13 @@ class Scraper
   def run(isins, fields: FIELDS, concurrent: 200, parallel: 1)
     FileUtils.mkdir_p @drop_box
 
-    return if isins.empty?
+    return 0 if isins.empty?
 
-    @hydra.max_concurrency = [0, concurrent].max
-    @counter               = 0
+    pids, *pipes = run_gear(isins, fields, concurrent, parallel)
 
-    isins.each_slice(500) do |subset|
-      subset.each_slice(parallel) { |stocks| scrape stocks, fields: fields }
-      @hydra.run
-    end
+    wait_for(pids, timeout: 20)
 
-    @counter
+    sum_scraped_stocks(*pipes)
   end
 
   private
@@ -110,7 +108,7 @@ class Scraper
       next unless stock.available?
 
       drop_stock(stock)
-      @counter += 1
+      @count += 1
     end
   end
 
