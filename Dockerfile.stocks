@@ -7,7 +7,7 @@ ENV RUBY_PACKAGES ruby curl libxslt ruby-bundler ruby-io-console
 RUN apk update && \
     apk add --no-cache $BUILD_PACKAGES && \
     apk add --no-cache $RUBY_PACKAGES && \
-    gem update --no-ri --no-rdoc
+    gem update bundler --no-ri --no-rdoc
 
 RUN cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 RUN echo "Europe/Berlin" > /etc/timezone
@@ -29,6 +29,7 @@ ENV PER_REQUEST 1
 ENV CONCURRENT_REQUESTS 50
 
 RUN apk del $BUILD_PACKAGES && \
+    gem uninstall minitest test-unit power_assert && \
     gem clean && \
     rm -rf /var/cache/apk/* && \
     rm -rf /usr/share/ri && \
@@ -45,6 +46,6 @@ RUN apk del $BUILD_PACKAGES && \
 COPY scripts/daily /etc/periodic/daily
 RUN chmod -R +x /etc/periodic/
 
-RUN chmod -R +x $APP_HOME/init
+RUN chmod -R +x $APP_HOME/scripts/init
 
 CMD ["./scripts/init"]

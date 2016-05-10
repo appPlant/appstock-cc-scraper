@@ -7,7 +7,7 @@ ENV RUBY_PACKAGES ruby git curl libxslt ruby-bundler ruby-io-console
 RUN apk update && \
     apk add --no-cache $BUILD_PACKAGES && \
     apk add --no-cache $RUBY_PACKAGES && \
-    gem update --no-ri --no-rdoc
+    gem update bundler --no-ri --no-rdoc
 
 RUN cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 RUN echo "Europe/Berlin" > /etc/timezone
@@ -26,6 +26,7 @@ RUN bundle install --no-cache --without development
 COPY . $APP_HOME
 
 RUN apk del $BUILD_PACKAGES && \
+    gem uninstall minitest test-unit power_assert && \
     gem clean && \
     rm -rf /var/cache/apk/* && \
     rm -rf /usr/share/ri && \
