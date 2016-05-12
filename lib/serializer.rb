@@ -38,7 +38,11 @@ class Serializer
   #
   # @return [ Hash ]
   def basic_data(stock)
-    { name: stock.name, wkn: stock.wkn, isin: stock.isin, type: 1 }
+    { name: stock.name,
+      wkn: stock.wkn,
+      isin: stock.isin,
+      country: stock.country,
+      type: 1 }
   end
 
   # Feeds to use for serialization.

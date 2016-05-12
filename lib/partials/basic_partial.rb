@@ -57,4 +57,13 @@ module BasicPartial
   rescue
     nil
   end
+
+  # The country where the company comes from.
+  #
+  # @return [ String ] ISO country code.
+  def country
+    data[:BasicV1][:ISO_COUNTRY]
+  rescue
+    nil
+  end
 end

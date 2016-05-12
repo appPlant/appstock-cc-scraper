@@ -28,6 +28,10 @@ RSpec.describe BasicPartial do
     describe '#sector' do
       it { expect(stock.sector).to eq('Informationstechnologie') }
     end
+
+    describe '#country' do
+      it { expect(stock.country).to eq('US') }
+    end
   end
 
   context 'when BasicV1 is missing' do
@@ -61,6 +65,11 @@ RSpec.describe BasicPartial do
     describe '#sector' do
       it { expect { stock.sector }.to_not raise_error }
       it { expect(stock.sector).to be_nil }
+    end
+
+    describe '#country' do
+      it { expect { stock.country }.to_not raise_error }
+      it { expect(stock.country).to be_nil }
     end
   end
 end
