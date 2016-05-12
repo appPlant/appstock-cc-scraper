@@ -32,6 +32,10 @@ RSpec.describe BasicPartial do
     describe '#country' do
       it { expect(stock.country).to eq('US') }
     end
+
+    describe '#currency' do
+      it { expect(stock.currency).to eq('USD') }
+    end
   end
 
   context 'when BasicV1 is missing' do
@@ -70,6 +74,11 @@ RSpec.describe BasicPartial do
     describe '#country' do
       it { expect { stock.country }.to_not raise_error }
       it { expect(stock.country).to be_nil }
+    end
+
+    describe '#currency' do
+      it { expect { stock.currency }.to_not raise_error }
+      it { expect(stock.currency).to be_nil }
     end
   end
 end

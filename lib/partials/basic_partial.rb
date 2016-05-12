@@ -1,3 +1,4 @@
+require 'currency'
 
 # That module can be used to get access to common stock properties found inside
 # the BasicV1 key map. This includes properties like ISIN or the name.
@@ -65,5 +66,12 @@ module BasicPartial
     data[:BasicV1][:ISO_COUNTRY]
   rescue
     nil
+  end
+
+  # The country's currency.
+  #
+  # @return [ String ] ISO currency code.
+  def currency
+    Currency[country]
   end
 end
