@@ -2,6 +2,7 @@ require 'json'
 require 'feeds/fact_set_feed'
 require 'feeds/intra_day_feed'
 require 'feeds/performance_feed'
+require 'feeds/technical_analysis_feed'
 require 'feeds/the_screener_feed'
 require 'feeds/trading_central_feed'
 
@@ -48,6 +49,7 @@ class Serializer
       FactSetFeed,
       IntraDayFeed,
       PerformanceFeed,
+      TechnicalAnalysisFeed,
       TheScreenerFeed,
       TradingCentralFeed
     ].map!(&:new)
