@@ -3,8 +3,6 @@ require_relative 'feed'
 # Feed extract informations about the intra-day price performance of a stock.
 # Such information include the current price or the traded volume.
 class IntraDayFeed < Feed
-  source :intra
-
   timestamp intra: :updated_at
 
   meta(:currency) { |stock| stock.intra.currency }

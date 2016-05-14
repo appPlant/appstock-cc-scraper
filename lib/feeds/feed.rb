@@ -1,13 +1,12 @@
 
 # Base class for stock feeds. Each feed consists of 3 parts:
-#  - The name of the source
+#  - Meta tags
 #  - Simple 1:1 mapping kpis
 #  - More complex or individual kpis
 #
 # The Feed class provides a DSL to easily configure a Feed.
 #
 # class TheScreenerFeed < Feed
-#   source :thescreener
 #   kpis_from screener: %i(per risk interest)
 #   kpi(:volatility, from: :risk) { volatility(1) }
 # end
@@ -22,24 +21,22 @@ class Feed
 
     return nil if kpis.empty?
 
-    metas(stock).merge!(source: self.class.source, kpis: kpis)
+    metas(stock).merge!(
+      source: :consorsbank,
+      feed: self.class.feed_name,
+      kpis: kpis
+    )
   end
 
-  # The source of the kpis.
+  # The name of the feed.
   #
-  # @example Set the source
-  #   source :thescreener
+  # @example Get the name of FactSetFeed class.
+  #   FactSetFeed.feed_name
+  #   #=> :fact_set
   #
-  # @example Get the source
-  #   source
-  #   => :thescreener
-  #
-  # @param [ Symbol ] The name of the source.
-  #
-  # @return [ Symbol]
-  def self.source(name = nil)
-    @source = name if name
-    @source
+  # @return [ Symbol ]
+  def self.feed_name
+    @feed ||= name.scan(/(.*)Feed$/)[0][0].downcase!
   end
 
   # The timestamp of the feeds data.
