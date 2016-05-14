@@ -31,7 +31,7 @@ end
 # Upload the archive to external drive.
 def upload_archive
   file = open('tmp/stocks.tar.gz')
-  meta = drive.put_file('consorsbank.stocks.tar.gz', file, true)
+  meta = drive.put_file('stocks.tar.gz', file, true)
 
   puts "Uploaded #{meta['size']} with rev #{meta['rev']}"
 rescue StandardError => e
