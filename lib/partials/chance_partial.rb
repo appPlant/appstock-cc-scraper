@@ -69,9 +69,16 @@ class ChancePartial < Partial
     value_of :VALUATION_RATING
   end
 
+  # The stock price when the analysis was made.
+  #
+  # @return [ Float ]
+  def price
+    @base[:PRICE_ANALYSIS]
+  end
+
   # The price currency.
   #
-  # @return [ String ] ISO currency symbol
+  # @return [ String ] ISO currency symbol.
   def currency
     @base[:ISO_CURRENCY]
   end

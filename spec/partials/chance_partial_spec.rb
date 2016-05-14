@@ -40,6 +40,10 @@ RSpec.describe ChancePartial do
       it { expect(stock.reverse_price).to eq(112.02) }
     end
 
+    describe '#price' do
+      it { expect(stock.price).to eq(112.29) }
+    end
+
     describe '#currency' do
       it { expect(stock.currency).to eq('USD') }
     end
@@ -93,6 +97,11 @@ RSpec.describe ChancePartial do
     describe '#reverse_price' do
       it { expect { stock.reverse_price }.to_not raise_error }
       it { expect(stock.reverse_price).to be_nil }
+    end
+
+    describe '#price' do
+      it { expect { stock.price }.to_not raise_error }
+      it { expect(stock.price).to be_nil }
     end
 
     describe '#currency' do

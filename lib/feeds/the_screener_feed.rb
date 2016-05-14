@@ -7,6 +7,7 @@ class TheScreenerFeed < Feed
 
   timestamp risk: :updated_at
 
+  meta(:price)    { |stock| stock.chance.price }
   meta(:currency) { |stock| stock.chance.currency }
 
   kpis_from screener: %i(per risk interest),
