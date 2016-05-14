@@ -29,6 +29,10 @@ RSpec.describe RiskPartial do
     describe '#correlation' do
       it { expect(stock.correlation).to eq(0.7) }
     end
+
+    describe '#updated_at' do
+      it { expect(stock.updated_at).to eq('2016-04-18T22:00:00+0000') }
+    end
   end
 
   context 'when ScreenerAnalysisV1 is missing' do
@@ -69,6 +73,11 @@ RSpec.describe RiskPartial do
     describe '#correlation' do
       it { expect { stock.correlation }.to_not raise_error }
       it { expect(stock.correlation).to be_nil }
+    end
+
+    describe '#updated_at' do
+      it { expect { stock.updated_at }.to_not raise_error }
+      it { expect(stock.updated_at).to be_nil }
     end
   end
 end
