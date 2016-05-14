@@ -30,6 +30,10 @@ RSpec.describe RiskPartial do
       it { expect(stock.correlation).to eq(0.7) }
     end
 
+    describe '#capitalization' do
+      it { expect(stock.capitalization).to eq(319.61) }
+    end
+
     describe '#updated_at' do
       it { expect(stock.updated_at).to eq('2016-04-18T22:00:00+0000') }
     end
@@ -73,6 +77,11 @@ RSpec.describe RiskPartial do
     describe '#correlation' do
       it { expect { stock.correlation }.to_not raise_error }
       it { expect(stock.correlation).to be_nil }
+    end
+
+    describe '#capitalization' do
+      it { expect { stock.capitalization }.to_not raise_error }
+      it { expect(stock.capitalization).to be_nil }
     end
 
     describe '#updated_at' do

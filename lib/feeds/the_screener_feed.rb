@@ -10,7 +10,7 @@ class TheScreenerFeed < Feed
   meta(:currency) { |stock| stock.chance.currency }
 
   kpis_from screener: %i(per risk interest),
-            risk: %i(bad_news bear_market beta correlation),
+            risk: %i(bad_news bear_market beta correlation capitalization),
             chance: %i(dividend earnings per trend outperformance)
   kpis_from chance: %i(reverse_price rating analysts)
 

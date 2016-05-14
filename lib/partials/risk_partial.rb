@@ -54,6 +54,13 @@ class RiskPartial < Partial
     value_of :CORRELATION
   end
 
+  # The market capitalization of that stock in Billion.
+  #
+  # @return [ Float ]
+  def capitalization
+    value_of :MARKET_CAPITALIZATION
+  end
+
   # The date from the last update.
   #
   # @return [ String ] A string in ISO representation.
