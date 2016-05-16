@@ -21,7 +21,7 @@ class Serializer
 
     data = {
       source: :consorsbank,
-      created_at: Time.now,
+      created_at: Time.now.to_i,
       version: 1,
       basic: basic_data(stock),
       analyses: feeds.map { |feed| feed.generate(stock) }.compact

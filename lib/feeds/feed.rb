@@ -121,9 +121,11 @@ class Feed
 
     case config
     when Array
-      stock.public_send(config[0])[config[1]]
+      stock.public_send(config[0])[config[1]].to_i
     when Proc
-      config.call(stock)
+      config.call(stock).to_i
+    else
+      0
     end
   end
 
