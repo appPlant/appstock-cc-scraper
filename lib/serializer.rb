@@ -17,14 +17,16 @@ class Serializer
   #
   # @return [ String ]
   def serialize(stock)
-    return '{}' unless stock.available?
+    analyses = feeds.map { |feed| feed.generate(stock) }.compact
+
+    return nil if analyses.empty?
 
     data = {
       source: :consorsbank,
       created_at: Time.now.to_i,
       version: 1,
       basic: basic_data(stock),
-      analyses: feeds.map { |feed| feed.generate(stock) }.compact
+      analyses: analyses
     }
 
     JSON.fast_generate(data, symbolize_names: false)

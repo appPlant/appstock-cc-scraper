@@ -129,8 +129,9 @@ class Scraper
   # @param [ Stock ] stock
   def save_stock_as_json(stock)
     filepath = File.join(@drop_box, filename_for(stock))
+    json     = @serializer.serialize(stock)
 
-    File.open(filepath, 'w+') { |io| io << @serializer.serialize(stock) }
+    File.open(filepath, 'w+') { |io| io << json } if json
   end
 
   # Generate a filename for a stock.

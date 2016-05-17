@@ -66,5 +66,20 @@ RSpec.describe Scraper do
 
       it('should return 0') { expect(run.call).to be(0) }
     end
+
+    context 'when serialized stock is nil' do
+      let(:content) { IO.read('spec/fixtures/facebook.json') }
+
+      before do
+        stub_request(:get, /id=.*/).to_return body: content
+        allow_any_instance_of(Serializer).to receive(:serialize).and_return nil
+      end
+
+      describe 'drop_box' do
+        subject { Dir.glob "#{scraper.drop_box}/*.json" }
+        before { run.call }
+        it { is_expected.to be_empty }
+      end
+    end
   end
 end

@@ -1,7 +1,8 @@
 RSpec.describe Serializer do
   let(:stock) { Stock.new(json) }
   let(:serializer) { described_class.new }
-  subject { serializer.serialize(stock).chomp }
+  let(:serialized) { serializer.serialize(stock) }
+  subject { serialized.chomp if serialized }
 
   before { Timecop.freeze(Time.utc(2016, 5, 2, 21, 26, 0)) }
 
@@ -19,7 +20,7 @@ RSpec.describe Serializer do
     let(:json) { {} }
 
     describe 'serialized stock' do
-      it { expect(JSON.parse(subject)).to be_empty }
+      it { is_expected.to be_nil }
     end
   end
 
