@@ -107,7 +107,7 @@ class Scraper
 
       next unless stock.available?
 
-      drop_stock(stock)
+      save_stock_as_json(stock)
       @count += 1
     end
   end
@@ -127,7 +127,7 @@ class Scraper
   # Save the scraped stock data in a file under @drop_box dir.
   #
   # @param [ Stock ] stock
-  def drop_stock(stock)
+  def save_stock_as_json(stock)
     filepath = File.join(@drop_box, filename_for(stock))
 
     File.open(filepath, 'w+') { |io| io << @serializer.serialize(stock) }
