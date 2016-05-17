@@ -21,7 +21,7 @@ RSpec.describe Feed do
       it { is_expected.to_not be_nil }
 
       it('should include only non-nil kpis') do
-        expect(subject[:kpis].keys).to eq([:upgrades])
+        expect(subject.keys).to eq([:upgrades, :meta])
       end
     end
   end

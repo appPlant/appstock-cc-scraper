@@ -22,11 +22,9 @@ class Feed
 
     return nil if kpis.empty?
 
-    metas(stock).merge!(
-      source: :consorsbank,
-      feed: self.class.feed_name,
-      kpis: kpis
-    )
+    meta = metas(stock).merge!(source: :consorsbank, feed: self.class.feed_name)
+
+    kpis.merge!(meta: meta)
   end
 
   # The name of the feed.
