@@ -2,7 +2,7 @@ require_relative 'feed'
 
 # Feed extract informations about the historical performance of a stock.
 class PerformanceFeed < Feed
-  timestamp { Time.now }
+  timestamp performance: :updated_at
 
   meta(:currency) { |stock| stock.intra.currency }
 

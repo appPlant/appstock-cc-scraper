@@ -3,7 +3,7 @@ require_relative 'feed'
 # Extract informations from consorsbank about the technical analyses like
 # MACD, the rsi or momentum indicators.
 class TechnicalAnalysisFeed < Feed
-  timestamp { Time.now }
+  timestamp technical_analysis: :updated_at
 
   kpis_from technical_analysis: %i(macd)
 
