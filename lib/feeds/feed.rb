@@ -119,14 +119,16 @@ class Feed
   def timestamp(stock)
     config = self.class.timestamp
 
-    case config
-    when Array
-      stock.public_send(config[0])[config[1]].to_i
-    when Proc
-      config.call(stock).to_i
-    else
-      0
-    end
+    time =  case config
+            when Array
+              stock.public_send(config[0])[config[1]]
+            when Proc
+              config.call(stock)
+            else
+              0
+            end
+
+    (time.is_a?(String) ? Time.parse(time) : time).to_i
   end
 
   # The meta tags for the stock including the timestamp.
