@@ -14,6 +14,6 @@ class TheScreenerFeed < Feed
   kpis_from chance: %i(reverse_price rating analysts)
 
   kpi(:volatility, from: :risk) do
-    { '1m': volatility(1), '12m': volatility(12) }
+    prune '1m': volatility(1), '12m': volatility(12)
   end
 end
