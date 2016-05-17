@@ -119,4 +119,12 @@ RSpec.describe ChancePartial do
       it { expect(stock.updated_at).to be_nil }
     end
   end
+
+  context 'when ScreenerAnalysisV1 is incomplete' do
+    let(:json) { { ScreenerAnalysisV1: { CHANCE: { DIVIDEND: 1 } } } }
+
+    describe '#earnings' do
+      it { expect(stock.earnings).to be_nil }
+    end
+  end
 end

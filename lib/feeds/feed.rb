@@ -166,7 +166,8 @@ class Feed
 
     kpis.each_with_object({}) do |(name, keys), map|
       partial = stock.public_send(name)
-      keys.each { |key| map[key] = partial[key] } if partial.available?
+      next unless partial.available?
+      keys.each { |key| store_kpi(map, key, partial[key]) }
     end
   end
 
@@ -181,8 +182,21 @@ class Feed
     return {} unless nodes
 
     nodes.each_with_object({}) do |(name, (scope, block)), map|
-      partial   = scope ? stock.public_send(scope) : stock
-      map[name] = partial.instance_exec(&block) if partial.available?
+      partial = scope ? stock.public_send(scope) : stock
+      next unless partial.available?
+      store_kpi(map, name, partial.instance_exec(&block))
     end
+  end
+
+  # Store key-value pair only if value is not nil.
+  #
+  # @param [ Hash ] hsh
+  # @param [ Symbol ] key
+  # @param [ Object ] value
+  #
+  # @return [ Hash ] hsh
+  def store_kpi(hsh, key, value)
+    hsh[key] = value unless value.nil?
+    hsh
   end
 end

@@ -20,36 +20,28 @@ class TradingCentralPartial < Partial
   #
   # @return [ Array<Float> ]
   def supports
-    return nil unless available?
-
-    [data[:SUPPORT_1], data[:SUPPORT_2], data[:SUPPORT_3]]
+    prune [data[:SUPPORT_1], data[:SUPPORT_2], data[:SUPPORT_3]]
   end
 
   # The resistance values where to be notified.
   #
   # @return [ Array<Float> ]
   def resistors
-    return nil unless available?
-
-    [data[:RESISTANCE_1], data[:RESISTANCE_2], data[:RESISTANCE_3]]
+    prune [data[:RESISTANCE_1], data[:RESISTANCE_2], data[:RESISTANCE_3]]
   end
 
   # The short term potential (2-4 weeks).
   #
   # @return [ Hash ] { delta:Int opinion:Int }
   def short_term
-    return nil unless available?
-
-    { delta: data[:DELTA_SHORTTERM], opinion: data[:OPINION_SHORTTERM] }
+    prune delta: data[:DELTA_SHORTTERM], opinion: data[:OPINION_SHORTTERM]
   end
 
   # The medium term potential (3-6 months).
   #
   # @return [ Hash ] { delta:Int opinion:Int }
   def medium_term
-    return nil unless available?
-
-    { delta: data[:DELTA_MEDIUMTERM], opinion: data[:OPINION_MEDIUMTERM] }
+    prune delta: data[:DELTA_MEDIUMTERM], opinion: data[:OPINION_MEDIUMTERM]
   end
 
   # The date from the last update.

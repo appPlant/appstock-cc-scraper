@@ -75,4 +75,24 @@ RSpec.describe TradingCentralPartial do
       it { expect(stock.updated_at).to be_nil }
     end
   end
+
+  context 'when TradingCentralV1 is incomplete' do
+    let(:json) { { TradingCentralV1: [{ SUPPORT_2: 1 }] } }
+
+    describe '#supports' do
+      it { expect(stock.supports).to eq([nil, 1, nil]) }
+    end
+
+    describe '#resistors' do
+      it { expect(stock.resistors).to be_nil }
+    end
+
+    describe '#short_term' do
+      it { expect(stock.short_term).to be_nil }
+    end
+
+    describe '#medium_term' do
+      it { expect(stock.medium_term).to be_nil }
+    end
+  end
 end

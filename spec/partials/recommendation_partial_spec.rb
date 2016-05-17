@@ -116,4 +116,16 @@ RSpec.describe RecommendationPartial do
       it { expect(stock.updated_at).to be_nil }
     end
   end
+
+  context 'when RecommendationV1 is incomplete' do
+    let(:json) { { RecommendationV1: { UP: 1 } } }
+
+    describe '#recent' do
+      it { expect(stock.recent).to be_nil }
+    end
+
+    describe '#last_quarter' do
+      it { expect(stock.last_quarter).to be_nil }
+    end
+  end
 end

@@ -79,8 +79,6 @@ class RecommendationPartial < Partial
   # @return [ Hash ] A hash like
   #                  { buy:A, overweight:B, hold:C, underweight:D, sell:C }
   def recent
-    return nil unless available?
-
     ratings_for :BUY_RECENT,
                 :OVERWEIGHT_RECENT,
                 :HOLD_RECENT,
@@ -93,8 +91,6 @@ class RecommendationPartial < Partial
   # @return [ Hash ] A hash like
   #                  { buy:A, overweight:B, hold:C, underweight:D, sell:C }
   def last_quarter
-    return nil unless available?
-
     ratings_for :BUY_M3,
                 :OVERWEIGHT_M3,
                 :HOLD_M3,
@@ -119,6 +115,6 @@ class RecommendationPartial < Partial
   # @return [ Hash ] A hash like
   #                  { buy:A, overweight:B, hold:C, underweight:D, sell:C }
   def ratings_for(*keys)
-    Hash[RATING_TYPES.zip(data.values_at(*keys))]
+    prune(Hash[RATING_TYPES.zip(data.values_at(*keys))])
   end
 end
