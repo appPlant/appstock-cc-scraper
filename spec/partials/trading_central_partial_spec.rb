@@ -52,22 +52,22 @@ RSpec.describe TradingCentralPartial do
 
     describe '#supports' do
       it { expect { stock.supports }.to_not raise_error }
-      it { expect(stock.supports).to eq([nil, nil, nil]) }
+      it { expect(stock.supports).to be_nil }
     end
 
     describe '#resistors' do
       it { expect { stock.resistors }.to_not raise_error }
-      it { expect(stock.resistors).to eq([nil, nil, nil]) }
+      it { expect(stock.resistors).to be_nil }
     end
 
     describe '#short_term' do
       it { expect { stock.short_term }.to_not raise_error }
-      it { expect(stock.short_term).to eq(delta: nil, opinion: nil) }
+      it { expect(stock.short_term).to be_nil }
     end
 
     describe '#medium_term' do
       it { expect { stock.medium_term }.to_not raise_error }
-      it { expect(stock.medium_term).to eq(delta: nil, opinion: nil) }
+      it { expect(stock.medium_term).to be_nil }
     end
 
     describe '#updated_at' do

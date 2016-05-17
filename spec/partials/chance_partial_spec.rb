@@ -71,7 +71,7 @@ RSpec.describe ChancePartial do
 
     describe '#earnings' do
       it { expect { stock.earnings }.to_not raise_error }
-      it { expect(stock.earnings.values.compact).to be_empty }
+      it { expect(stock.earnings).to be_nil }
     end
 
     describe '#per' do

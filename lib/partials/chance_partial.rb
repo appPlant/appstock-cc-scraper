@@ -21,7 +21,10 @@ class ChancePartial < Partial
   #
   # @return [ Hash ] { revision: x, trend: y, growth: z }
   def earnings
-    { revision: earnings_revision,
+    return nil unless available?
+
+    {
+      revision: earnings_revision,
       trend: earnings_trend,
       growth: long_term_earnings_growth
     }

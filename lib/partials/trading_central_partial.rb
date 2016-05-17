@@ -20,6 +20,8 @@ class TradingCentralPartial < Partial
   #
   # @return [ Array<Float> ]
   def supports
+    return nil unless available?
+
     [data[:SUPPORT_1], data[:SUPPORT_2], data[:SUPPORT_3]]
   end
 
@@ -27,6 +29,8 @@ class TradingCentralPartial < Partial
   #
   # @return [ Array<Float> ]
   def resistors
+    return nil unless available?
+
     [data[:RESISTANCE_1], data[:RESISTANCE_2], data[:RESISTANCE_3]]
   end
 
@@ -34,6 +38,8 @@ class TradingCentralPartial < Partial
   #
   # @return [ Hash ] { delta:Int opinion:Int }
   def short_term
+    return nil unless available?
+
     { delta: data[:DELTA_SHORTTERM], opinion: data[:OPINION_SHORTTERM] }
   end
 
@@ -41,6 +47,8 @@ class TradingCentralPartial < Partial
   #
   # @return [ Hash ] { delta:Int opinion:Int }
   def medium_term
+    return nil unless available?
+
     { delta: data[:DELTA_MEDIUMTERM], opinion: data[:OPINION_MEDIUMTERM] }
   end
 

@@ -103,12 +103,12 @@ RSpec.describe RecommendationPartial do
 
     describe '#recent' do
       it { expect { stock.recent }.to_not raise_error }
-      it { expect(stock.recent).to eq(buy: nil, overweight: nil, hold: nil, underweight: nil, sell: nil) }
+      it { expect(stock.recent).to be_nil }
     end
 
     describe '#last_quarter' do
       it { expect { stock.last_quarter }.to_not raise_error }
-      it { expect(stock.last_quarter).to eq(buy: nil, overweight: nil, hold: nil, underweight: nil, sell: nil) }
+      it { expect(stock.last_quarter).to be_nil }
     end
 
     describe '#updated_at' do
