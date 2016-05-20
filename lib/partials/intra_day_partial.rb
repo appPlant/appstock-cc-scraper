@@ -70,7 +70,7 @@ class IntraDayPartial < Partial
   # When the price was updated.
   #
   # @return [ String ] ISO datetime value.
-  def updated_at
-    data[:DATETIME_PRICE]
+  def age_in_days
+    diff_in_days data[:DATETIME_PRICE]
   end
 end

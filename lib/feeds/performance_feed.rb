@@ -2,7 +2,7 @@ require_relative 'feed'
 
 # Feed extract informations about the historical performance of a stock.
 class PerformanceFeed < Feed
-  timestamp performance: :updated_at
+  age_from :performance
 
   meta(:currency) { |stock| stock.intra.currency }
 
@@ -11,6 +11,6 @@ class PerformanceFeed < Feed
   kpi(:'52w', from: :performance) { of(52, :weeks) }
   kpi(:cy,    from: :performance) { of(:current, :year) }
   kpi(:'3y',  from: :performance) { of(3, :years) }
-  kpi(:high,  from: :performance) { prune price: high, at: high_at }
-  kpi(:low,   from: :performance) { prune price: low, at: low_at }
+  kpi(:high,  from: :performance) { prune price: high, age: high_at }
+  kpi(:low,   from: :performance) { prune price: low, age: low_at }
 end

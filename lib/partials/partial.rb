@@ -1,3 +1,4 @@
+require 'time'
 
 # Informations about a partial aspect of a stock.
 class Partial
@@ -13,8 +14,8 @@ class Partial
   # The date from the last update.
   #
   # @return [ String ] A string in ISO representation.
-  def updated_at
-    Time.now
+  def age_in_days
+    diff_in_days Time.now
   end
 
   # If there are informations within the provided data.
@@ -69,5 +70,22 @@ class Partial
     end
 
     obj if obj.any?
+  end
+
+  # Calculate diff in days between today and the specified date.
+  #
+  # @param [Numeric|String|Date] obj The date to diff agains today.
+  #
+  # @return [ Int ]
+  def diff_in_days(obj)
+    return nil unless available? && obj
+
+    date =  case obj
+            when Numeric then Time.at(obj)
+            when String then Time.parse(obj)
+            else obj
+            end.to_date
+
+    (Date.today - date).to_i
   end
 end

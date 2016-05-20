@@ -43,14 +43,14 @@ class PerformancePartial < Partial
   #
   # @return [ String ] ISO formated date time.
   def high_at
-    data[:DATETIME_W52_HIGH]
+    diff_in_days data[:DATETIME_W52_HIGH]
   end
 
   # The date of highest price within the last 52 weeks.
   #
   # @return [ String ] ISO formated date time.
   def low_at
-    data[:DATETIME_W52_LOW]
+    diff_in_days data[:DATETIME_W52_LOW]
   end
 
   private

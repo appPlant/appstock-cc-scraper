@@ -1,6 +1,8 @@
 RSpec.describe PerformancePartial do
   let(:perf) { described_class.new(json) }
 
+  before { Timecop.freeze(Time.utc(2016, 4, 18)) }
+
   context 'when PerformanceV1 is present' do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
     let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
@@ -26,11 +28,11 @@ RSpec.describe PerformancePartial do
     end
 
     describe '#high_at' do
-      it { expect(perf.high_at).to eq('2016-02-01T23:00:00+0000') }
+      it { expect(perf.high_at).to eq(77) }
     end
 
     describe '#low' do
-      it { expect(perf.low_at).to eq('2015-08-23T22:00:00+0000') }
+      it { expect(perf.low_at).to eq(239) }
     end
   end
 

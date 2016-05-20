@@ -3,7 +3,7 @@ require_relative 'feed'
 # Feed extract informations about recommendations of a stock. Such informations
 # include the target price, the upside potential or the recent disposition.
 class FactSetFeed < Feed
-  timestamp recommendations: :updated_at
+  age_from :recommendations
 
   meta(:currency) { |stock| stock.recommendations.currency }
 

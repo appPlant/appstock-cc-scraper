@@ -101,8 +101,8 @@ class RecommendationPartial < Partial
   # The date from the last update.
   #
   # @return [ String ] A string in ISO representation.
-  def updated_at
-    data[:DATETIME_LAST_UPDATE]
+  def age_in_days
+    diff_in_days data[:DATETIME_LAST_UPDATE]
   end
 
   private

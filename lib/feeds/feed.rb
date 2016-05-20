@@ -38,21 +38,17 @@ class Feed
     @feed ||= name.scan(/(.*)Feed$/)[0][0].downcase!
   end
 
-  # The timestamp of the feeds data.
+  # The age in days of the feeds data.
   #
-  # @example A partial holds the timestamp.
-  #   timestamp screener: :updated_at
+  # @example The partial that holds the age.
+  #   age_from :screener
   #
-  # @example Set a custom timestamp.
-  #   timestamp -> { |stock| ... }
-  #
-  # @param [ Hash ] map A map with a single entry like partial: :method
-  # @param [ Proc ] block A codeblock to execute which returns the date.
+  # @param [ Symbol ] name The name of the partial.
   #
   # @return [ Void ]
-  def self.timestamp(map = nil, &block)
-    @timestamp = map ? map.first : block if map || block
-    @timestamp
+  def self.age_from(name = nil)
+    @age_from = name if name
+    @age_from
   end
 
   # Add meta tag to the feed.
@@ -101,7 +97,7 @@ class Feed
   #
   # @example Get config of simple and complex kpis.
   #   config
-  #   #=> { simple: {..}, complex: {..}, timestamp: .. }
+  #   #=> { simple: {..}, complex: {..} }
   #
   # @return [ Hash ]
   def self.kpis
@@ -114,20 +110,11 @@ class Feed
   #
   # @param [ Stock ]
   #
-  # @return [ Hash ]
-  def timestamp(stock)
-    config = self.class.timestamp
+  # @return [ Int ]
+  def age_in_days(stock)
+    partial = stock.public_send(self.class.age_from)
 
-    time =  case config
-            when Array
-              stock.public_send(config[0])[config[1]]
-            when Proc
-              config.call(stock)
-            else
-              0
-            end
-
-    (time.is_a?(String) ? Time.parse(time) : time).to_i
+    partial.age_in_days
   end
 
   # The meta tags for the stock including the timestamp.
@@ -136,7 +123,7 @@ class Feed
   #
   # @return [ Hash ]
   def metas(stock)
-    nodes  = { timestamp: timestamp(stock) }
+    nodes  = { age: age_in_days(stock) }
     config = self.class.meta
 
     config.each_pair { |name, block| nodes[name] = block.call(stock) } if config

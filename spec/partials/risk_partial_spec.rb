@@ -1,6 +1,8 @@
 RSpec.describe RiskPartial do
   let(:stock) { described_class.new(json) }
 
+  before { Timecop.freeze(Time.utc(2016, 4, 18)) }
+
   context 'when ScreenerAnalysisV1 is present' do
     let(:raw) { IO.read('spec/fixtures/facebook.json') }
     let(:json) { JSON.parse(raw, symbolize_names: true)[0] }
@@ -34,8 +36,8 @@ RSpec.describe RiskPartial do
       it { expect(stock.capitalization).to eq(319.61) }
     end
 
-    describe '#updated_at' do
-      it { expect(stock.updated_at).to eq('2016-04-18T22:00:00+0000') }
+    describe '#age_in_days' do
+      it { expect(stock.age_in_days).to eq(0) }
     end
   end
 
@@ -84,9 +86,9 @@ RSpec.describe RiskPartial do
       it { expect(stock.capitalization).to be_nil }
     end
 
-    describe '#updated_at' do
-      it { expect { stock.updated_at }.to_not raise_error }
-      it { expect(stock.updated_at).to be_nil }
+    describe '#age_in_days' do
+      it { expect { stock.age_in_days }.to_not raise_error }
+      it { expect(stock.age_in_days).to be_nil }
     end
   end
 end

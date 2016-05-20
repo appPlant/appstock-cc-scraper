@@ -3,7 +3,7 @@ require_relative 'feed'
 # Extract informations from tradingcentral about the technical analyses like
 # the support and resistance levels.
 class TradingCentralFeed < Feed
-  timestamp trading_central: :updated_at
+  age_from :trading_central
 
   meta :currency, &:currency
 

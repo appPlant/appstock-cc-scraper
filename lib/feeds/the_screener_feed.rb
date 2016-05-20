@@ -3,7 +3,7 @@ require_relative 'feed'
 # Extract informations from thescreener about the risk and chance of a stock.
 # Such information include trends, ratings or relative performance stats.
 class TheScreenerFeed < Feed
-  timestamp risk: :updated_at
+  age_from :risk
 
   meta(:price)    { |stock| stock.chance.price }
   meta(:currency) { |stock| stock.chance.currency }
