@@ -29,6 +29,6 @@ class MultiFeed < Feed
       feed.each_with_object({}) { |(k, v), item| item[k] = v[i] }
     end
 
-    { meta: meta, items: items }
+    { items: items, meta: meta }
   end
 end
