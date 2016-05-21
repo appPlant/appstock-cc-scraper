@@ -7,6 +7,7 @@ require 'partials/technical_analysis_partial'
 require 'partials/trading_central_partial'
 require 'partials/risk_partial'
 require 'partials/chance_partial'
+require 'partials/events_partial'
 
 # Each instance of class Stock indicates one finance security. The provided
 # informations are reaching from basic properties like name and ISIN over
@@ -92,6 +93,13 @@ class Stock
   # @return [ Chance ]
   def chance
     @chance ||= ChancePartial.new(@data)
+  end
+
+  # Outlook figures of the stock from thescreener.
+  #
+  # @return [ Chance ]
+  def events
+    @events ||= EventsPartial.new(@data)
   end
 
   # Availability of the stock on cortal consors.

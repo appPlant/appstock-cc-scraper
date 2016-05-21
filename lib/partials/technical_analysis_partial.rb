@@ -5,6 +5,8 @@ class TechnicalAnalysisPartial < Partial
   # Initializer of the class.
   #
   # @param [ Hash ] raw The serialized raw data from BNP Paribas.
+  #
+  # @return [ TechnicalAnalysisPartial ]
   def initialize(data)
     super data[:TechnicalAnalysisV1] || {}
   end

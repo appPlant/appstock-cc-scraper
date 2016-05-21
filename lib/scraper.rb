@@ -24,7 +24,8 @@ class Scraper
     :ScreenerV1,
     :ScreenerAnalysisV1,
     :TechnicalAnalysisV1,
-    :TradingCentralV1
+    :TradingCentralV1,
+    :EventsV1
   ].freeze
 
   include Gear

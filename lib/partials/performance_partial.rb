@@ -5,6 +5,8 @@ class PerformancePartial < Partial
   # Initializer of the class.
   #
   # @param [ Hash ] raw The serialized raw data from BNP Paribas.
+  #
+  # @return [ PerformancePartial ]
   def initialize(data)
     super data[:PerformanceV1] || {}
   end

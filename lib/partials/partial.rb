@@ -2,9 +2,11 @@ require 'time'
 
 # Informations about a partial aspect of a stock.
 class Partial
-  # Initializer of the class.
+  # Initialize a partial by applying the serialized subset of raw data.
   #
-  # @param [ Hash ] raw The serialized raw data from BNP Paribas.
+  # @param [ Hash ] data The serialized data from BNP Paribas.
+  #
+  # @return [ Partial ]
   def initialize(data)
     @data = data
   end

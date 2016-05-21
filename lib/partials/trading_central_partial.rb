@@ -5,6 +5,8 @@ class TradingCentralPartial < Partial
   # Initializer of the class.
   #
   # @param [ Hash ] raw The serialized raw data from BNP Paribas.
+  #
+  # @return [ TradingCentralPartial ]
   def initialize(data)
     super data.fetch(:TradingCentralV1, [])[0] || {}
   end

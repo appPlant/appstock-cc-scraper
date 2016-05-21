@@ -42,6 +42,13 @@ RSpec.describe Stock do
     it { expect(stock.chance).to be_a(ChancePartial) }
   end
 
+  describe '#events' do
+    it { expect(stock.events).to be_a(EventsPartial) }
+    it('should contain of event partials') do
+      expect(stock.events.partial_class).to be(EventPartial)
+    end
+  end
+
   describe '#available?' do
     context 'when ISIN is present' do
       it { expect(stock.available?).to be_truthy }

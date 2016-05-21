@@ -65,12 +65,30 @@
             "URL_LOGO_SMALL":"https://gateway.mdgms.com/extern/logo_image.html?ID_LOGO=137267&ID_TYPE_IMAGE_LOGO=1"
         },
         "EventsV1":{
-            "AMOUNT":0,
+            "AMOUNT":3,
             "ITEMS":[
+                {
+                    "DATETIME_EVENT":"2016-06-16T12:00:00+0000",
+                    "EVENT_TYPE":"AGM",
+                    "NAME_EVENT":"Ordentliche Hauptversammlung",
+                    "TITLE":"Wirecard AG: Hauptversammlung 2016"
+                },
+                {
+                    "DATETIME_EVENT":"2016-08-11T12:00:00+0000",
+                    "EVENT_TYPE":"RESULTS",
+                    "NAME_EVENT":"Veröffentlichung des Halbjahresberichtes",
+                    "TITLE":"Wirecard AG: Veröffentlichung 6-Monatsabschluss 2016"
+                },
+                {
+                    "DATETIME_EVENT":"2016-11-16T12:00:00+0000",
+                    "EVENT_TYPE":"RESULTS",
+                    "NAME_EVENT":"Veröffentlichung des 9-Monats-Berichtes",
+                    "TITLE":"Wirecard AG: Veröffentlichung 9-Monatsabschluss 2016"
+                }
             ],
             "PAGE_INDEX":0,
             "PAGE_SIZE":10,
-            "TOTAL_AMOUNT":0,
+            "TOTAL_AMOUNT":3,
             "TOTAL_PAGES":1
         },
         "ExchangesV1":[
