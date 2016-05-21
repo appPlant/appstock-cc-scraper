@@ -1,4 +1,5 @@
 require 'time'
+require 'partials/multi_partial'
 
 # Base class for stock feeds. Each feed consists of 3 parts:
 #  - Meta tags

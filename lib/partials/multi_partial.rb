@@ -1,4 +1,5 @@
 require 'forwardable'
+require_relative 'partial'
 
 # A MultiPartial indicates an 1:n association between the stock instance and
 # something else like events for it.
@@ -8,7 +9,7 @@ require 'forwardable'
 #
 #   events.first
 #   # => EventPartial
-class MultiPartial
+class MultiPartial < Partial
   include Enumerable
   extend Forwardable
 
@@ -32,5 +33,14 @@ class MultiPartial
   # @return [ Boolean ] A true value means availability.
   def available?
     @partials && any?
+  end
+
+  # Call method equal to key and return the value for each partial.
+  #
+  # @param [Symbol] Method name.
+  #
+  # @return [ Array<Object> ]
+  def [](key)
+    map { |partial| partial[key] }
   end
 end
