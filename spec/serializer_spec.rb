@@ -31,9 +31,9 @@ RSpec.describe Serializer do
     before { json.delete :PerformanceV1 }
 
     describe 'serialized stock' do
-      let(:analyses) { JSON.parse(subject)['analyses'] }
+      let(:feeds) { JSON.parse(subject)['feeds'] }
       it('should not include performance') do
-        expect(analyses.any? { |i| i['source'] == 'performance' }).to be_falsy
+        expect(feeds.any? { |i| i['source'] == 'performance' }).to be_falsy
       end
     end
   end

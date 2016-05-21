@@ -27,7 +27,7 @@ class Serializer
       created_at: Time.now.to_i,
       version: 1,
       basic: basic_data(stock),
-      analyses: analyses
+      feeds: analyses
     }
 
     JSON.fast_generate(data, symbolize_names: false)
