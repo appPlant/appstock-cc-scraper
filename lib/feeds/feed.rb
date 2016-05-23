@@ -171,7 +171,7 @@ class Feed
     nodes.each_with_object({}) do |(name, (scope, block)), map|
       partial = scope ? stock.public_send(scope) : stock
       next unless partial.available?
-      store_kpi(map, name, partial.instance_exec(&block))
+      store_kpi(map, name, partial.exec(&block))
     end
   end
 

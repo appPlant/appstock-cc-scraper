@@ -38,6 +38,15 @@ class Partial
     nil
   end
 
+  # Executes the given block within the scope of the instance.
+  #
+  # @param [ Proc ] &block Code block to execute for.
+  #
+  # @return [ Object ] Returned result of the executed block.
+  def exec(&block)
+    instance_exec(&block)
+  end
+
   protected
 
   # Remove all nil values from object and return nil if empty.

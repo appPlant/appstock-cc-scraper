@@ -43,4 +43,13 @@ class MultiPartial < Partial
   def [](key)
     map { |partial| partial[key] }
   end
+
+  # Executes the given block within the scope for each partial.
+  #
+  # @param [ Proc ] &block Code block to execute for.
+  #
+  # @return [ Object ] Returned result of the executed block.
+  def exec(&block)
+    map { |partial| partial.exec(&block) }
+  end
 end
