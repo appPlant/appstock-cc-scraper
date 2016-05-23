@@ -25,7 +25,8 @@ class Scraper
     :ScreenerAnalysisV1,
     :TechnicalAnalysisV1,
     :TradingCentralV1,
-    :EventsV1
+    :EventsV1,
+    :HistoryV1
   ].freeze
 
   include Gear
@@ -104,7 +105,7 @@ class Scraper
     data = parse_response(res)
 
     data.each do |json|
-      stock = Stock.new(json)
+      stock = Stock.new(json, res.effective_url)
 
       next unless stock.available?
 
@@ -166,6 +167,8 @@ class Scraper
     url = 'https://www.consorsbank.de/ev/rest/de/marketdata/stocks?field=BasicV1'
 
     fields.each { |field| url << "&field=#{field}" if FIELDS.include? field }
+
+    url << '&range=-3&resolution=1W' if fields.include? :HistoryV1
 
     isins.each_with_object(url) { |isin, uri| uri << "&id=#{isin}" }
   end

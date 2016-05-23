@@ -8,6 +8,7 @@ require 'partials/trading_central_partial'
 require 'partials/risk_partial'
 require 'partials/chance_partial'
 require 'partials/events_partial'
+require 'partials/history_partial'
 
 # Each instance of class Stock indicates one finance security. The provided
 # informations are reaching from basic properties like name and ISIN over
@@ -33,11 +34,15 @@ class Stock
   # Initializer. Each instance indicates one finance security.
   #
   # @param [ Hash ] raw The serialized raw data from BNP Paribas.
-  def initialize(data)
+  # @param [ String ] url The URL where the data comes from.
+  #
+  # @return [ Stock ]
+  def initialize(data, url = nil)
+    @url  = url
     @data = data
   end
 
-  attr_reader :data
+  attr_reader :data, :url
 
   # Informations from thescreener about the stock.
   #
@@ -95,11 +100,18 @@ class Stock
     @chance ||= ChancePartial.new(@data)
   end
 
-  # Outlook figures of the stock from thescreener.
+  # Outlook figures of the stock.
   #
   # @return [ Chance ]
   def events
     @events ||= EventsPartial.new(@data)
+  end
+
+  # History performance figures of the stock.
+  #
+  # @return [ Chance ]
+  def history
+    @history ||= HistoryPartial.new(@data, @url)
   end
 
   # Availability of the stock on cortal consors.

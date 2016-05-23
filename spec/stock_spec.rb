@@ -1,7 +1,7 @@
 RSpec.describe Stock do
   let(:raw)   { IO.read('spec/fixtures/facebook.json') }
   let(:json)  { JSON.parse(raw, symbolize_names: true)[0] }
-  let(:stock) { described_class.new(json) }
+  let(:stock) { described_class.new(json, '') }
   subject { stock }
 
   it { is_expected.to respond_to(:data, :to_json) }
@@ -44,9 +44,10 @@ RSpec.describe Stock do
 
   describe '#events' do
     it { expect(stock.events).to be_a(EventsPartial) }
-    it('should contain of event partials') do
-      expect(stock.events.partial_class).to be(EventPartial)
-    end
+  end
+
+  describe '#history' do
+    it { expect(stock.history).to be_a(HistoryPartial) }
   end
 
   describe '#available?' do

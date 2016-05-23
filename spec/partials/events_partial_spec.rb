@@ -12,6 +12,10 @@ RSpec.describe EventsPartial do
     describe '#count' do
       it { expect(stock.count).to eq(3) }
     end
+
+    it('should wrap partials of class EventPartial') do
+      expect(stock.first.class).to be(EventPartial)
+    end
   end
 
   context 'when EventsV1 is missing' do

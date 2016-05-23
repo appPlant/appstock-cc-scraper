@@ -6,6 +6,7 @@ require 'feeds/technical_analysis_feed'
 require 'feeds/the_screener_feed'
 require 'feeds/trading_central_feed'
 require 'feeds/events_feed'
+require 'feeds/history_feed'
 
 # JSON serializer for stock class. The serializer goes through all feeds,
 # generates their content and serializes them to one JSON encoded string.
@@ -59,7 +60,8 @@ class Serializer
       TechnicalAnalysisFeed,
       TheScreenerFeed,
       TradingCentralFeed,
-      EventsFeed
+      EventsFeed,
+      HistoryFeed
     ].map!(&:new)
   end
 end

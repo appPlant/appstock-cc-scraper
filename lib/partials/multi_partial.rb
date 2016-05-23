@@ -20,11 +20,12 @@ class MultiPartial < Partial
   #
   # @return [ MultiPartial ]
   def initialize(data, partial_class)
-    @partial_class = partial_class
-    @partials      = (data || []).map { |item| partial_class.new(item) }
+    @partials = (data || []).map { |item| partial_class.new(item) }
+
+    super(data)
   end
 
-  attr_reader :partials, :partial_class
+  attr_reader :partials
 
   def_delegator :@partials, :each
 

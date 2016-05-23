@@ -1,5 +1,5 @@
 RSpec.describe Serializer do
-  let(:stock) { Stock.new(json) }
+  let(:stock) { Stock.new(json, 'resolution=1W') }
   let(:serializer) { described_class.new }
   let(:serialized) { serializer.serialize(stock) }
   subject { serialized.chomp if serialized }
