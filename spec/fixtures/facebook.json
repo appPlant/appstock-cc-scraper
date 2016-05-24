@@ -68,13 +68,13 @@
             "AMOUNT":3,
             "ITEMS":[
                 {
-                    "DATETIME_EVENT":"2016-06-16T12:00:00+0000",
+                    "DATETIME_EVENT":"2016-05-16T12:00:00+0000",
                     "EVENT_TYPE":"AGM",
                     "NAME_EVENT":"Ordentliche Hauptversammlung",
                     "TITLE":"Wirecard AG: Hauptversammlung 2016"
                 },
                 {
-                    "DATETIME_EVENT":"2016-08-11T12:00:00+0000",
+                    "DATETIME_EVENT":"2016-05-11T12:00:00+0000",
                     "EVENT_TYPE":"RESULTS",
                     "NAME_EVENT":"Veröffentlichung des Halbjahresberichtes",
                     "TITLE":"Wirecard AG: Veröffentlichung 6-Monatsabschluss 2016"

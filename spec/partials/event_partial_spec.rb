@@ -17,7 +17,7 @@ RSpec.describe EventPartial do
     end
 
     describe '#occurs_in' do
-      it { expect(event.occurs_in).to eq(59) }
+      it { expect(event.occurs_in).to eq(28) }
     end
   end
 end

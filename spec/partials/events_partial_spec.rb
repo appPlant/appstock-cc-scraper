@@ -10,7 +10,7 @@ RSpec.describe EventsPartial do
     end
 
     describe '#count' do
-      it { expect(stock.count).to eq(3) }
+      it { expect(stock.count).to eq(2) }
     end
 
     it('should wrap partials of class EventPartial') do
