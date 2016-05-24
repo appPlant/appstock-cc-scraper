@@ -21,6 +21,7 @@ class MultiPartial < Partial
   # @return [ MultiPartial ]
   def initialize(data, partial_class)
     @partials = (data || []).map { |item| partial_class.new(item) }
+                            .keep_if(&:available?)
 
     super(data)
   end
