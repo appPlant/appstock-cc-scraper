@@ -10,7 +10,7 @@ RSpec.describe HistoryPartial do
     end
 
     describe '#count' do
-      it { expect(stock.count).to eq(31) }
+      it { expect(stock.count).to eq(7) }
     end
 
     it('should wrap partials of class PeriodPartial') do

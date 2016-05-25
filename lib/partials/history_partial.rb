@@ -13,6 +13,7 @@ class HistoryPartial < MultiPartial
     @period = url.to_s.scan(/resolution=(.{2})/).flatten.first
 
     super (data[:HistoryV1] || {})[:ITEMS], PeriodPartial
+    partials.slice!(7..-1)
   end
 
   attr_reader :period
