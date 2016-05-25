@@ -168,7 +168,7 @@ class Scraper
 
     fields.each { |field| url << "&field=#{field}" if FIELDS.include? field }
 
-    url << '&range=-3&resolution=1W' if fields.include? :HistoryV1
+    url << '&range=-1&resolution=1D' if fields.include? :HistoryV1
 
     isins.each_with_object(url) { |isin, uri| uri << "&id=#{isin}" }
   end
