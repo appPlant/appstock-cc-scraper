@@ -44,6 +44,8 @@ class Stock
 
   attr_reader :data, :url
 
+  alias exec instance_exec
+
   # Informations from thescreener about the stock.
   #
   # @return [ Screener ]

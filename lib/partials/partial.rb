@@ -40,11 +40,12 @@ class Partial
 
   # Executes the given block within the scope of the instance.
   #
+  # @param [ Stock ] stock Stock instance that owns the partials.
   # @param [ Proc ] &block Code block to execute for.
   #
   # @return [ Object ] Returned result of the executed block.
-  def exec(&block)
-    instance_exec(&block)
+  def exec(stock, &block)
+    instance_exec(stock, &block)
   end
 
   protected
