@@ -6,6 +6,14 @@ class PerformanceFeed < Feed
 
   meta(:currency) { |stock| stock.intra.currency }
 
+  (1...7).each do |i|
+    kpi("#{i}d") do
+      if i < history.count
+        (100 - history.first.last / history.to_a[i].last * 100).round(2)
+      end
+    end
+  end
+
   kpi(:'1w',  from: :performance) { of(1, :week) }
   kpi(:'4w',  from: :performance) { of(4, :weeks) }
   kpi(:'52w', from: :performance) { of(52, :weeks) }
