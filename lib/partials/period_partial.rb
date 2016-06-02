@@ -49,7 +49,7 @@ class PeriodPartial < Partial
   #
   # @return [ Float ]
   def performance
-    (100 - first / last * 100).round(2)
+    (100 - first / last * 100).round(2) unless high == 0
   rescue
     nil
   end
@@ -58,7 +58,7 @@ class PeriodPartial < Partial
   #
   # @return [ Float ]
   def volatility
-    (100 - low / high * 100).round(2)
+    (100 - low / high * 100).round(2) unless high == 0
   rescue
     nil
   end
