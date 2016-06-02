@@ -8,5 +8,5 @@ class HistoryFeed < MultiFeed
   meta(:currency) { |stock| stock.history.currency }
   meta(:period) { |stock| stock.history.period }
 
-  kpis_from history: %i(first last high low volume age)
+  kpis_from history: %i(first last high low volume performance volatility age)
 end

@@ -44,4 +44,22 @@ class PeriodPartial < Partial
   def age
     diff_in_days data[:DATETIME_LAST]
   end
+
+  # Performance of that period between last and first price.
+  #
+  # @return [ Float ]
+  def performance
+    (100 - first / last * 100).round(2)
+  rescue
+    nil
+  end
+
+  # Volatility of that period between last and first price.
+  #
+  # @return [ Float ]
+  def volatility
+    (100 - low / high * 100).round(2)
+  rescue
+    nil
+  end
 end
