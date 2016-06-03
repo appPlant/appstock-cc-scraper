@@ -67,11 +67,21 @@ RSpec.describe PeriodPartial do
     end
 
     describe '#performance' do
+      before do
+        allow(period).to receive(:first).and_return 0
+        allow(period).to receive(:last).and_return 0
+      end
+
       it { expect { period.performance }.to_not raise_error }
       it { expect(period.performance).to be_nil }
     end
 
     describe '#volatility' do
+      before do
+        allow(period).to receive(:high).and_return 0
+        allow(period).to receive(:low).and_return 0
+      end
+
       it { expect { period.volatility }.to_not raise_error }
       it { expect(period.volatility).to be_nil }
     end
