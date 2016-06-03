@@ -20,4 +20,24 @@ RSpec.describe EventPartial do
       it { expect(event.occurs_in).to eq(28) }
     end
   end
+
+  context 'when EventsV1 is missing' do
+    let(:json) { {} }
+    let(:event) { described_class.new json }
+
+    describe '#type' do
+      it { expect { event.type }.to_not raise_error }
+      it { expect(event.type).to be_nil }
+    end
+
+    describe '#name' do
+      it { expect { event.name }.to_not raise_error }
+      it { expect(event.name).to be_nil }
+    end
+
+    describe '#occurs_in' do
+      it { expect { event.occurs_in }.to_not raise_error }
+      it { expect(event.occurs_in).to be_nil }
+    end
+  end
 end

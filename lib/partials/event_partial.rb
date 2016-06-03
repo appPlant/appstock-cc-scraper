@@ -21,5 +21,7 @@ class EventPartial < Partial
   # @return [ Int ]
   def occurs_in
     -diff_in_days(data[:DATETIME_EVENT])
+  rescue
+    nil
   end
 end
