@@ -46,6 +46,8 @@ class Serializer
       wkn: stock.wkn,
       isin: stock.isin,
       country: stock.country,
+      branch: stock.branch,
+      sector: stock.sector,
       type: 1 }
   end
 
