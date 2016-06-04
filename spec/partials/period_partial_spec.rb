@@ -28,10 +28,6 @@ RSpec.describe PeriodPartial do
       it { expect(period.age).to eq(0) }
     end
 
-    describe '#performance' do
-      it { expect(period.performance).to eq(0.77) }
-    end
-
     describe '#volatility' do
       it { expect(period.volatility).to eq(1.93) }
     end
@@ -64,16 +60,6 @@ RSpec.describe PeriodPartial do
     describe '#age' do
       it { expect { period.age }.to_not raise_error }
       it { expect(period.age).to be_nil }
-    end
-
-    describe '#performance' do
-      before do
-        allow(period).to receive(:first).and_return 0
-        allow(period).to receive(:last).and_return 0
-      end
-
-      it { expect { period.performance }.to_not raise_error }
-      it { expect(period.performance).to be_nil }
     end
 
     describe '#volatility' do

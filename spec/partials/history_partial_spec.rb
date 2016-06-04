@@ -26,6 +26,11 @@ RSpec.describe HistoryPartial do
     describe '#currency' do
       it { expect(stock.currency).to eq('EUR') }
     end
+
+    describe '#performance' do
+      subject { stock.performance }
+      it { is_expected.to eq([0.61, -1.3, 0.51, 0.87, 1.56, -1.49]) }
+    end
   end
 
   context 'when HistoryV1 is missing' do

@@ -20,21 +20,21 @@ class MultiPartial < Partial
   #
   # @return [ MultiPartial ]
   def initialize(data, partial_class)
-    @partials = (data || []).map { |item| partial_class.new(item) }
-                            .keep_if(&:available?)
+    @items = (data || []).map { |item| partial_class.new(item) }
+                         .keep_if(&:available?)
 
     super(data)
   end
 
-  attr_reader :partials
+  attr_reader :items
 
-  def_delegator :@partials, :each
+  def_delegator :@items, :each
 
   # If there are informations within the provided data.
   #
   # @return [ Boolean ] A true value means availability.
   def available?
-    @partials && any?
+    @items && any?
   end
 
   # Call method equal to key and return the value for each partial.

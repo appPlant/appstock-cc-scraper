@@ -13,15 +13,37 @@ class HistoryPartial < MultiPartial
     @period = url.to_s.scan(/resolution=(.{2})/).flatten.first
 
     super (data[:HistoryV1] || {})[:ITEMS], PeriodPartial
-    partials.slice!(7..-1)
+    items.slice!(7..-1)
   end
 
   attr_reader :period
+
+  # Call method equal to key and return the value for each partial.
+  #
+  # @param [Symbol] Method name.
+  #
+  # @return [ Array<Object> ]
+  def [](key)
+    key == :performance ? performance : super
+  end
 
   # The currency of the prices.
   #
   # @return [ String ] ISO currency symbol
   def currency
     data.first[:ISO_CURRENCY] if available?
+  end
+
+  # Performance of each period between each last price.
+  #
+  # @return [ Array<Float> ]
+  def performance
+    items[0..-2].zip(items[1..-1]).map! do |(cur, pre)|
+      begin
+        (100 - pre.last / cur.last * 100).round(2) if pre && cur.last != 0
+      rescue
+        nil
+      end
+    end
   end
 end

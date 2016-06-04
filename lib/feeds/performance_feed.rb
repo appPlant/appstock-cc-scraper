@@ -8,8 +8,8 @@ class PerformanceFeed < Feed
 
   (1...7).each do |i|
     kpi("#{i}d") do
-      if i < history.count && history.first.last && history.to_a[i].last != 0
-        (100 - history.first.last / history.to_a[i].last * 100).round(2)
+      if i < history.count && history.to_a[i].last && history.first.last != 0
+        (100 - history.to_a[i].last / history.first.last * 100).round(2)
       end
     end
   end

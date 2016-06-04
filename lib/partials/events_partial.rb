@@ -10,6 +10,6 @@ class EventsPartial < MultiPartial
   # @return [ EventPartial ]
   def initialize(data)
     super (data[:EventsV1] || {})[:ITEMS], EventPartial
-    partials.keep_if { |event| event.occurs_in <= 32 }
+    items.keep_if { |event| event.occurs_in <= 32 }
   end
 end
