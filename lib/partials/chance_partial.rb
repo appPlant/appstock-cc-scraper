@@ -60,7 +60,7 @@ class ChancePartial < Partial
   #
   # @return [ Float ]
   def reverse_price
-    value_of :TECHNICAL_REVERSE
+    validate_price value_of(:TECHNICAL_REVERSE)
   end
 
   # The rating of the current stock valuation.
@@ -74,7 +74,7 @@ class ChancePartial < Partial
   #
   # @return [ Float ]
   def price
-    @base[:PRICE_ANALYSIS]
+    validate_price @base[:PRICE_ANALYSIS]
   end
 
   # The price currency.

@@ -15,21 +15,21 @@ class IntraDayPartial < Partial
   #
   # @return [ Float ]
   def price
-    data[:PRICE]
+    validate_price data[:PRICE]
   end
 
   # The highes traded price.
   #
   # @return [ Float ]
   def high
-    data[:HIGH]
+    validate_price data[:HIGH]
   end
 
   # The lowest traded price.
   #
   # @return [ Float ]
   def low
-    data[:LOW]
+    validate_price data[:LOW]
   end
 
   # The currency of the price.

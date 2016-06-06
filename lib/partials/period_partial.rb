@@ -7,28 +7,28 @@ class PeriodPartial < Partial
   #
   # @return [ Float ]
   def first
-    data[:FIRST]
+    validate_price data[:FIRST]
   end
 
   # Closing price of the time range.
   #
   # @return [ Float ]
   def last
-    data[:LAST]
+    validate_price data[:LAST]
   end
 
   # Highest price of the time range.
   #
   # @return [ Float ]
   def high
-    data[:HIGH]
+    validate_price data[:HIGH]
   end
 
   # Lowest price of the time range.
   #
   # @return [ Float ]
   def low
-    data[:LOW]
+    validate_price data[:LOW]
   end
 
   # Traded volume of the time range.

@@ -31,14 +31,14 @@ class PerformancePartial < Partial
   #
   # @return [ Float ]
   def high
-    value_for :PRICE_W52_HIGH
+    validate_price value_for(:PRICE_W52_HIGH)
   end
 
   # The highest price within the last 52 weeks.
   #
   # @return [ Float ]
   def low
-    value_for :PRICE_W52_LOW
+    validate_price value_for(:PRICE_W52_LOW)
   end
 
   # The date of highest price within the last 52 weeks.

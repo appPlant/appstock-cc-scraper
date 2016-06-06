@@ -40,7 +40,7 @@ class HistoryPartial < MultiPartial
   def performance
     items[0..-2].zip(items[1..-1]).map! do |(cur, pre)|
       begin
-        (100 - pre.last / cur.last * 100).round(2) if pre && cur.last != 0
+        (100 - pre.last / cur.last * 100).round(2) if pre
       rescue
         nil
       end

@@ -57,7 +57,7 @@ class RecommendationPartial < Partial
   #
   # @return [ Float ]
   def target_price
-    data[:TARGET_PRICE]
+    validate_price data[:TARGET_PRICE]
   end
 
   # The currency of the target price.

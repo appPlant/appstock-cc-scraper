@@ -100,4 +100,13 @@ class Partial
 
     (Date.today - date).to_i
   end
+
+  # Return nil if the specified price has an invalid value.
+  #
+  # @param [ Int ] value
+  #
+  # @return [ Int ]
+  def validate_price(value)
+    value if value && value > 0
+  end
 end
