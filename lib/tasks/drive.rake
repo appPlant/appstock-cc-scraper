@@ -1,4 +1,3 @@
-require 'dropbox_sdk'
 
 namespace :drive do
   desc 'Download list from external drive'
@@ -41,7 +40,6 @@ end
 # Create a tar of all scraped stock data.
 def create_archive
   successful = system('cd tmp && tar cfvz stocks.tar.gz stocks &>/dev/null')
-
   raise 'Could not create the archive' unless successful
 end
 
@@ -50,5 +48,6 @@ end
 #
 # @return [ DropboxClient ]
 def drive
+  require 'dropbox_sdk'
   @client ||= DropboxClient.new ENV['ACCESS_TOKEN']
 end

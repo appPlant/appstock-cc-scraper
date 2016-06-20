@@ -1,9 +1,9 @@
-require 'benchmark'
-require 'scraper'
 
 namespace :scrape do
   desc 'Scrape all data from consorsbank.de'
   task :stocks do
+    require 'benchmark'
+    require 'scraper'
     task('scraper:run').invoke(
       ENV.fetch('PER_REQUEST', 1),
       ENV.fetch('CONCURRENT_REQUESTS', 50)
@@ -12,6 +12,8 @@ namespace :scrape do
 
   desc 'Scrape intraday stats from consorsbank.de'
   task :intra do
+    require 'benchmark'
+    require 'scraper'
     task('scraper:run').invoke(
       ENV.fetch('PER_REQUEST', 30),
       ENV.fetch('CONCURRENT_REQUESTS', 200),
