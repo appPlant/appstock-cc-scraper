@@ -1,4 +1,4 @@
-FROM alpine:3.4
+FROM alpine:3.5
 MAINTAINER Sebastian Katzer "katzer.sebastian@googlemail.com"
 
 ENV APP_HOME /usr/app/
@@ -32,7 +32,9 @@ RUN apk update && \
     rm -rf vendor/bundle/gems/*/spec && \
     rm -rf vendor/bundle/gems/*/doc && \
     rm -rf vendor/bundle/gems/*/examples && \
-    rm -rf vendor/bundle/gems/**/*.md
+    rm -rf vendor/bundle/gems/**/*.md && \
+    rm -rf build && \
+    rm .dockerignore
 
 RUN chmod +x init && \
     bundle exec whenever -w -r intra
